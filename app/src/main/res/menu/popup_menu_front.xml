@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/text_f_id"
+        android:title="Text" />
+    <item
+        android:id="@+id/image_f_id"
+        android:title="Image" />
+    <item
+        android:id="@+id/audio_f_id"
+        android:title="Audio" />
+
+</menu>

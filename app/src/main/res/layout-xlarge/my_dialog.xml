@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:text="Choose tags"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:textColor="?attr/colorAccent"
+        android:id="@+id/tv3"
+        android:textSize="18sp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/ed"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:singleLine="true"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:hint="Add tags..." />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+        <ListView
+            android:id="@+id/listView1"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        </ListView>
+    </LinearLayout>
+    <View
+        android:id="@+id/myMaterialDialog_lineView"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:minHeight="1dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#15000000"
+        android:gravity="center_horizontal"
+        android:visibility="visible"/>
+</LinearLayout>

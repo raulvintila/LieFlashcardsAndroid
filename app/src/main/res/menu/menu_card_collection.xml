@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.raulvintila.app.lieflashcards.Activities.CardCollectionActivity">
+
+<!--    <item
+        android:id="@+id/action_select_deck_text"
+        android:title="All cards"
+        app:showAsAction="always"/>-->
+<!--    <item
+        android:id="@+id/action_select_deck_icon"
+        android:title="Select deck"
+        android:icon="@drawable/now"
+        app:showAsAction="always"
+        />-->
+
+    <item
+        android:id="@+id/action_search"
+        app:showAsAction="always"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        android:title="Search"/>
+    
+
+</menu>

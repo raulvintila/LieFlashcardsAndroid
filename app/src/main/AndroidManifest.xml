@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.raulvintila.app.lieflashcards" >
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/kuala"
+        android:label="Lie Flashcards"
+        android:theme="@style/AppTheme.WithoutActionBar" >
+        <activity
+            android:name=".Activities.MainActivity"
+            android:label="MainActivity"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activities.DeckActivity"
+            android:label="@string/title_activity_deck" >
+        </activity>
+        <activity
+            android:name=".Activities.AddCardActivity"
+            android:label="AddCardActivity" >
+        </activity>
+        <activity
+            android:name=".Activities.RegisterActivity"
+            android:label="RegisterActivity" >
+        </activity>
+        <activity
+            android:name=".Activities.StatisticsActivity"
+            android:label="@string/title_activity_statistics"
+            android:parentActivityName=".Activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".Activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.AddImageActivity"
+            android:label="@string/title_activity_add_image" >
+        </activity>
+        <activity
+            android:name=".Activities.AudioRecordActivity"
+            android:label="@string/title_activity_audio_record"
+            android:parentActivityName=".Activities.AddCardActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.AddCardActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.PlayDeckActivity"
+            android:label="@string/title_activity_play_deck"
+            android:parentActivityName=".Activities.DeckActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.raulvintila.app.lieflashcards.Activities.DeckActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.CardCollectionActivity"
+            android:label="@string/title_activity_card_collection"
+            android:parentActivityName=".Activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.raulvintila.app.lieflashcards.Activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Activities.GoalsActivity"
+            android:label="@string/title_activity_goals"
+            android:parentActivityName=".Activities.DeckActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.raulvintila.app.lieflashcards.Activities.DeckActivity" />
+        </activity>
+    </application>
+
+</manifest>

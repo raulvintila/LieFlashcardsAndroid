@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.raulvintila.app.lieflashcards.Activities.PlayDeckActivity">
+    <item android:id="@+id/action_clear_whiteboard" android:title="Clear Whiteobard" android:icon="@drawable/ic_format_paint_white_24dp"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_swap" android:title="Swap" android:icon="@drawable/ic_swap_horiz_white_24dp"
+         app:showAsAction="always" />
+    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_whiteboard" android:title="Enable whiteboard"
+         app:showAsAction="never" />
+</menu>

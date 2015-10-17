@@ -1,0 +1,35 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#ff1ca337</item>
+        <item name="colorPrimaryDark">#FF1D7C2F</item>
+        <item name="colorAccent">#ff1ca337</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+
+    <style name="AppTheme.WithoutActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_background_label</item>
+        <item name="android:textColor">#ff0d0509</item>
+    </style>
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">#ffffffff</item>
+    </style>
+
+    <style name="button_labels_style">
+        <item name="android:background">@drawable/fab_background_label</item>
+        <item name="android:textColor">#E91E63</item>
+    </style>
+
+
+</resources>

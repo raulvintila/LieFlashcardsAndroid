@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/tab1"
+    >
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Rename"
+                android:id="@+id/rename"
+                android:onClick="onClick"
+                android:background="@drawable/button"
+                android:layout_alignParentTop="true"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="16dip"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:minHeight="1dp"
+                android:id="@+id/bar1"
+                android:layout_below="@+id/rename"
+                android:layout_gravity="center_horizontal"
+                android:background="#15000000"
+                android:gravity="center_horizontal"
+                android:visibility="visible"/>
+            />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Stack"
+                android:onClick="onClick"
+                android:id="@+id/stack"
+                android:background="@drawable/button"
+                android:layout_below="@+id/bar1"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="16dip"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:minHeight="1dp"
+                android:id="@+id/bar2"
+                android:layout_below="@+id/stack"
+                android:layout_gravity="center_horizontal"
+                android:background="#15000000"
+                android:gravity="center_horizontal"
+                android:visibility="visible"/>
+            />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Cards per day"
+                android:id="@+id/cards"
+                android:background="@drawable/button"
+                android:layout_below="@+id/bar2"
+                android:onClick="onClick"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="16dip"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:minHeight="1dp"
+                android:id="@+id/bar3"
+                android:layout_below="@+id/cards"
+                android:layout_gravity="center_horizontal"
+                android:background="#15000000"
+                android:gravity="center_horizontal"
+                android:visibility="visible"/>
+            />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:id="@+id/hints"
+                android:layout_below="@+id/bar3"
+                android:background="@drawable/button"
+                android:onClick="onClick"
+                android:text="Hints"
+                android:clickable="true"
+                android:textAllCaps="false"
+                android:gravity="center|left"
+                android:paddingLeft="16dp">
+
+            </Button>
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:minHeight="1dp"
+                android:id="@+id/bar4"
+                android:layout_below="@+id/hints"
+                android:layout_gravity="center_horizontal"
+                android:background="#15000000"
+                android:gravity="center_horizontal"
+                android:visibility="visible"/>
+            />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Archive"
+                android:id="@+id/archive"
+                android:background="@drawable/button"
+                android:layout_below="@+id/bar4"
+                android:gravity="left|center_vertical"
+                android:onClick="onClick"
+                android:paddingLeft="16dip"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:minHeight="1dp"
+                android:id="@+id/bar5"
+                android:layout_below="@+id/archive"
+                android:layout_gravity="center_horizontal"
+                android:background="#15000000"
+                android:gravity="center_horizontal"
+                android:visibility="visible"/>
+            />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Remove"
+                android:id="@+id/remove"
+                android:onClick="onClick"
+                android:background="@drawable/button"
+                android:layout_below="@+id/bar5"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="16dip"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:minHeight="1dp"
+                android:id="@+id/bar6"
+                android:layout_below="@+id/remove"
+                android:layout_gravity="center_horizontal"
+                android:background="#15000000"
+                android:gravity="center_horizontal"
+                android:visibility="visible"/>
+            />
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+
+
+
+</RelativeLayout>
+

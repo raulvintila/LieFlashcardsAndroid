@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:hint="Add tags..."
+        android:singleLine="true"
+        android:textColor="#000000"
+        android:textSize="@dimen/customEntry" />
+
+
+    <CheckBox
+        android:id="@+id/Elementary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Elementary"
+        android:textColor="#000000"
+        android:textSize="@dimen/customEntry" />
+
+    <CheckBox
+        android:id="@+id/Begginer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Beginner"
+        android:textColor="#000000"
+        android:textSize="@dimen/customEntry" />
+
+    <CheckBox
+        android:id="@+id/Intermediate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Intermediate"
+        android:textColor="#000000"
+        android:textSize="@dimen/customEntry" />
+
+    <CheckBox
+        android:id="@+id/Intermediate1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Intermediate"
+        android:textColor="#000000"
+        android:textSize="@dimen/customEntry" />
+
+    <CheckBox
+        android:id="@+id/Intermediate2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Intermediate"
+        android:textColor="#000000"
+        android:textSize="@dimen/customEntry" />
+
+    <CheckBox
+        android:id="@+id/Intermediate3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Intermediate"
+        android:textColor="#000000"
+        android:textSize="@dimen/customEntry" />
+
+    <CheckBox
+        android:id="@+id/Intermediate4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Intermediate"
+        android:textColor="#000000"
+        android:textSize="@dimen/customEntry" />
+
+    <CheckBox
+        android:id="@+id/Master"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Master"
+        android:textColor="#000000"
+        android:textSize="@dimen/customEntry" />
+</LinearLayout>

@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.raulvintila.app.lieflashcards.Activities.DeckActivity">
+
+    <item
+        android:id="@+id/check_in_store"
+        android:title="Check in Store"
+        android:icon="@drawable/ic_done"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/add"
+        android:title="Add"
+        android:icon="@drawable/ic_add_white_18dp"
+        app:showAsAction="ifRoom"
+        />
+</menu>

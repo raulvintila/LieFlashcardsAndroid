@@ -10,3 +10,6 @@
 .idea/vcs.xml
 .app/app.iml
 .app/build
+libs/libs.iml
+.idea/modules.xml
+app/app.iml

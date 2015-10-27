@@ -20,6 +20,7 @@
         android:label="Lie Flashcards"
         android:theme="@style/AppTheme.WithoutActionBar" >
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.MainActivity"
             android:label="MainActivity"
             android:theme="@style/AppTheme" >
@@ -30,18 +31,22 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.DeckActivity"
             android:label="@string/title_activity_deck" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.AddCardActivity"
             android:label="AddCardActivity" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.RegisterActivity"
             android:label="RegisterActivity" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.StatisticsActivity"
             android:label="@string/title_activity_statistics"
             android:parentActivityName=".Activities.MainActivity" >
@@ -50,6 +55,7 @@
                 android:value=".Activities.MainActivity" />
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".Activities.MainActivity" >
@@ -58,10 +64,12 @@
                 android:value=".Activities.MainActivity" />
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.AddImageActivity"
             android:label="@string/title_activity_add_image" >
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.AudioRecordActivity"
             android:label="@string/title_activity_audio_record"
             android:parentActivityName=".Activities.AddCardActivity" >
@@ -70,6 +78,7 @@
                 android:value=".Activities.AddCardActivity" />
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.PlayDeckActivity"
             android:label="@string/title_activity_play_deck"
             android:parentActivityName=".Activities.DeckActivity" >
@@ -78,6 +87,7 @@
                 android:value="com.raulvintila.app.lieflashcards.Activities.DeckActivity" />
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.CardCollectionActivity"
             android:label="@string/title_activity_card_collection"
             android:parentActivityName=".Activities.MainActivity" >
@@ -86,6 +96,7 @@
                 android:value="com.raulvintila.app.lieflashcards.Activities.MainActivity" />
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.GoalsActivity"
             android:label="@string/title_activity_goals"
             android:parentActivityName=".Activities.DeckActivity" >

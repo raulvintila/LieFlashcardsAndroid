@@ -80,7 +80,7 @@ public class DeckOverviewFragment extends Fragment {
         android.support.v4.app.FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.add(R.id.play_mode_fragment_container, fragment).commit();
 
-        databaseManager = ((MyApplication)getActivity().getApplicationContext()).databaseManager;
+        //databaseManager = ((MyApplication)getActivity().getApplicationContext()).databaseManager;
         DBDeck deck = databaseManager.getDeckById(CustomModel.getInstance().getDeckId());
 
         TextView deck_main_mode = (TextView) view.findViewById(R.id.deck_main_mode);

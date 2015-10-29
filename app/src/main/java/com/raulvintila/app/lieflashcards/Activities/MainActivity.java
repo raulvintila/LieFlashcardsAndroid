@@ -83,16 +83,16 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean accounts_expanded;
 
-    Toolbar toolbar;
-    NavigationView navigation;
-    DrawerLayout drawerLayout;
-    ActionBarDrawerToggle drawerToggle;
-    FloatingActionsMenu menuMultipleActions;
-    LinearLayout rootLayout;
-    FloatingActionButton card_button;
+    private Toolbar toolbar;
+    private NavigationView navigation;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
+    private FloatingActionsMenu menuMultipleActions;
+    private LinearLayout rootLayout;
+    private FloatingActionButton card_button;
     private RecyclerView rv;
     List<DeckRecyclerViewItem> data = new ArrayList<>();
-    IDatabaseManager databaseManager;
+    private IDatabaseManager databaseManager;
 
     boolean PUSH_ACTION = false;
     boolean PULL_ACTION = false;

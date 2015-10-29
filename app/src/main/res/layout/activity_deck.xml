@@ -1,12 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:weightSum="8"
     tools:context="com.raulvintila.app.lieflashcards.Activities.DeckActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
@@ -25,20 +28,205 @@
                 app:layout_collapseMode="pin"/>
 
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_below="@+id/toolbar"
-                android:layout_height="wrap_content"
-                style="@style/MyCustomTabLayout"
-                app:tabMode="fixed"
-                app:tabGravity="fill"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.view.ViewPager
+        <!--<android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"/>-->
     </LinearLayout>
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:id="@+id/icons_ll"
+        android:weightSum="5">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:id="@+id/cards_icon"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:src="@drawable/ic_library_books_black_24dp"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:id="@+id/goals"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:src="@drawable/ic_flag_black_24dp"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center"
+            android:id="@+id/achievments"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:src="@drawable/ic_black_trophy"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:id="@+id/statistics"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:src="@drawable/ic_equalizer_black_24dp"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:id="@+id/settings"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:src="@drawable/ic_settings_black_24dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:minHeight="1dp"
+        android:focusableInTouchMode="true"
+        android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:id="@+id/stats_rl"
+        android:background="@color/white"
+        android:paddingTop="16dp"
+        android:paddingRight="56dp"
+        android:paddingLeft="56dp">
+        <RelativeLayout
+            android:id="@+id/deck_stats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/deck_main_mode"
+                android:text="Study"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_below="@+id/deck_main_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/deck_sub_mode"
+                android:text="Normal"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/due_today"
+                android:text="Due today:"
+                android:gravity="left"
+                android:layout_below="@+id/deck_sub_mode"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/due_today_stats"
+                android:layout_below="@+id/deck_sub_mode"
+                android:gravity="right"
+                android:text="20 1 19"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_new_cards"
+                android:text="Total new cards:"
+                android:gravity="left"
+                android:layout_below="@+id/due_today"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_new_cards_stats"
+                android:layout_below="@+id/due_today"
+                android:gravity="right"
+                android:text="45"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_cards"
+                android:text="Total cards:"
+                android:gravity="left"
+                android:layout_below="@+id/total_new_cards"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_cards_stats"
+                android:layout_below="@+id/total_new_cards"
+                android:gravity="right"
+                android:text="122"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/estimated_time"
+                android:text="Estimated time:"
+                android:gravity="left"
+                android:layout_below="@+id/total_cards"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/estimated_time_stats"
+                android:layout_below="@+id/total_cards"
+                android:gravity="right"
+                android:text="10 min"/>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/play_mode_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/deck_stats"
+            android:text="PlayMode flavor text here"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:minHeight="1dp"
+        android:focusableInTouchMode="true"
+        android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:id="@+id/play"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/white_button"
+        android:text="Play"
+        android:onClick="onClick"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:textAllCaps="false"
+        android:textColor="#ff676767"
+        />
+</LinearLayout>

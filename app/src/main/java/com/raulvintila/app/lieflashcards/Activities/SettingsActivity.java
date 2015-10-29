@@ -11,7 +11,7 @@ import com.raulvintila.app.lieflashcards.R;
 
 public class SettingsActivity extends ActionBarActivity {
 
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -25,14 +25,14 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/navItem2_collections"
-            android:icon="@drawable/ic_collections_black_24dp"
+            android:icon="@drawable/ic_library_books_black_24dp"
             android:checkable="false"
             android:title="Collections"/>
         <item
             android:id="@+id/navItem3_statistics"
             android:title="Statistics"
             android:checkable="false"
-            android:icon="@drawable/ic_assignment_black_24dp" />
+            android:icon="@drawable/ic_equalizer_black_24dp" />
 
         <item
             android:id="@+id/navItem4_store"

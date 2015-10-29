@@ -43,14 +43,14 @@ public class DBDeck {
         this.id = id;
         this.remoteId = remoteId;
         this.name = name;
-        /*if (name.length() < 9)
+        if (name.length() < 19)
         {
             this.name = name;
         }
         else
         {
-            this.name = name.substring(0,8)+"...";
-        }*/
+            this.name = name.substring(0,18)+"...";
+        }
         this.number_of_cards = number_of_cards;
         this.number_of_cards_per_day = number_of_cards_per_day;
         this.total_new_cards = total_new_cards;

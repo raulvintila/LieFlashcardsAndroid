@@ -3,9 +3,11 @@ package com.raulvintila.app.lieflashcards.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Handler;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +68,21 @@ public class DecksRecyclerListAdapter extends RecyclerView.Adapter<DecksRecycler
 
         holder.mPhoto.setImageResource(mData.get(position).getPhotoId());
         holder.mCards.setText(mData.get(position).getCards());
-        holder.mName.setText(mData.get(position).getName());
+
+        Paint textPaint = holder.mName.getPaint();
+        String deck_name = mData.get(position).getName();
+        float width = textPaint.measureText(deck_name);
+        int widthint = mContext.getResources().getDisplayMetrics().widthPixels;
+        double maxwidth = widthint/1.6;
+        int i=deck_name.length();
+        while (width > maxwidth )
+        {
+            deck_name = deck_name.substring(0,i)+"...";
+            width = textPaint.measureText(deck_name);
+            i -= 1;
+        }
+
+        holder.mName.setText(deck_name);
         holder.mTime.setText(mData.get(position).getTime());
     }
 

@@ -44,18 +44,16 @@ import java.util.List;
 public class DeckActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    TabLayout tabLayout;
 
     //private SectionPagerAdapter mAdapter;
 
-    IDatabaseManager databaseManager;
+    private IDatabaseManager databaseManager;
     //private ViewPager mPager;
-    List<DeckRecyclerViewItem> data;
-    DeckRecyclerViewItem deckRecyclerViewItem;
-    String deck_name;
+    private List<DeckRecyclerViewItem> data;
+    private DeckRecyclerViewItem deckRecyclerViewItem;
+    private String deck_name;
     //DBDeck deck;
-    Integer[] hints_used;
-    String stack = "Current stack";
+    private Integer[] hints_used;
 
     @Override
     public void onRestart() {
@@ -211,68 +209,6 @@ public class DeckActivity extends AppCompatActivity {
                         @Override
                         public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                             showMeDialog(which);
-                            /*switch (which)
-                            {
-                                case 0:
-                                    new MaterialDialog.Builder(getApplicationContext())
-                                        .title("Rename")
-                                        .inputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
-                                        .input(deck_name, "", false, new MaterialDialog.InputCallback() {
-                                            @Override
-                                            public void onInput(MaterialDialog dialog, CharSequence input) {
-                                                deck_name = input.toString();
-                                                deckRecyclerViewItem.setName(input.toString());
-                                                getSupportActionBar().setTitle(input.toString());
-                                                DBDeck deck = databaseManager.getDeckById(CustomModel.getInstance().getDeckId());
-                                                deck.setName(input.toString());
-                                                databaseManager.insertOrUpdateDeck(deck);
-                                                CustomModel.getInstance().getAdapter().notifyDataSetChanged();
-                                            }
-                                        })
-                                                //.inputMaxLength(15)
-                                        .negativeText(R.string.cancel)
-                                        .positiveText(R.string.choose)
-                                        .show();
-                                    return;
-                                case 1:
-                                    new MaterialDialog.Builder(getApplicationContext())
-                                        .title("Change stack")
-                                                //.content("Current stack: " + deck)
-                                        .inputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
-                                        .input("", "", false, new MaterialDialog.InputCallback() {
-                                            @Override
-                                            public void onInput(MaterialDialog dialog, CharSequence input) {
-                                            }
-                                        })
-                                        .negativeText(R.string.cancel)
-                                        .positiveText(R.string.choose)
-                                        .show();
-                                    return;
-                                case 2:
-                                    new MaterialDialog.Builder(getApplicationContext())
-                                        .title("Cards per day")
-                                                //.content("Current number of cards: " + 20)
-                                        .inputType(InputType.TYPE_CLASS_NUMBER)
-                                        .input("Curent number of cards "+deck.getNumber_of_cards_per_day(),"", false, new MaterialDialog.InputCallback() {
-                                            @Override
-                                            public void onInput(MaterialDialog dialog, CharSequence input) {
-                                                deck.setNumber_of_cards_per_day(Integer.parseInt(input.toString()));
-                                                databaseManager.insertOrUpdateDeck(deck);
-                                                deckRecyclerViewItem.setCards(Integer.parseInt(input.toString())+" / 25 / 122");
-                                                CustomModel.getInstance().getAdapter().notifyDataSetChanged();
-                                            }
-                                        })
-                                        .negativeText(R.string.cancel)
-                                        .positiveText(R.string.choose)
-                                        .show();
-                                    return;
-                                case 3:
-                                    return;
-                                case 4:
-                                    return;
-                            }
-*/
-
                         }
                     })
                     .show();

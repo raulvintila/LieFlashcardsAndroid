@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,6 +17,7 @@ import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -239,7 +241,19 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         TextView v = (TextView) findViewById(R.id.deck_name);
-                        v.setText(sir[which]);
+                        Paint textPaint = v.getPaint();
+                        String deck_name = sir[which];
+                        float width = textPaint.measureText(deck_name);
+                        int widthint = getApplicationContext().getResources().getDisplayMetrics().widthPixels;
+                        float maxwidth = widthint/3;
+                        int i = deck_name.length();
+                        while (width > maxwidth )
+                        {
+                            deck_name = deck_name.substring(0, i)+"...";
+                            width = textPaint.measureText(deck_name);
+                            i -= 1;
+                        }
+                        v.setText(deck_name);
                         index = which;
                         return true;
                     }
@@ -385,6 +399,7 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
             }
         });
         final TextView deckTextView = (TextView) findViewById(R.id.deck_name);
+        Paint textPaint = deckTextView.getPaint();
 
 
         Bundle extras = getIntent().getExtras();
@@ -451,10 +466,38 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
                 }
                 deck = databaseManager.getDeckById(databaseManager.getCardById(card_id).getDeckId()).getName();
             }
-            deckTextView.setText(deck);
             index = deck_names.indexOf(deck);
-        } else {
-            deckTextView.setText(deck_names.get(0));
+
+            float width = textPaint.measureText(deck);
+            int widthint = this.getResources().getDisplayMetrics().widthPixels;
+            float maxwidth = widthint/3;
+            int i = deck.length();
+            while(width > maxwidth)
+            {
+
+                deck = deck.substring(0, i) + "...";
+                width = textPaint.measureText(deck);
+                i -= 1;
+            }
+            deckTextView.setText(deck);
+
+        }
+        else
+        {
+            String deck_name = deck_names.get(0);
+            float width = textPaint.measureText(deck_name);
+            int widthint = this.getResources().getDisplayMetrics().widthPixels;
+            float maxwidth = widthint/3;
+            int i = deck_name.length();
+            while (width > maxwidth )
+            {
+                deck_name = deck_name.substring(0, i)+"...";
+                width = textPaint.measureText(deck_name);
+                i -= 1;
+            }
+            deckTextView.setText(deck_name);
+
+
             index = 0;
             getSupportActionBar().setTitle("Create card");
             accept_state = "Create";

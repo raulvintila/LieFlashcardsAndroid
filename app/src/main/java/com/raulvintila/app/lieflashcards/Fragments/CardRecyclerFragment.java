@@ -15,6 +15,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -84,12 +85,18 @@ public class CardRecyclerFragment extends Fragment implements SearchView.OnQuery
 /*                textPaint.getTextBounds(item.getTitle().toString(), 0, item.getTitle().toString().length(), bounds);
                 int height = bounds.height();
                 int width = bounds.width();*/
-                float width = textPaint.measureText(item.getTitle().toString());
-                deck_search_tv.setText(item.getTitle());
-                if(width > 200)
+                String deck_name = item.getTitle().toString();
+                float width = textPaint.measureText(deck_name);
+                int widthint = getActivity().getResources().getDisplayMetrics().widthPixels;
+                float maxwidth = widthint/2;
+                int i = deck_name.length();
+                while (width > maxwidth )
                 {
-                    deck_search_tv.setText(item.getTitle().toString().substring(0,8)+"...");
+                    deck_name = deck_name.substring(0, i)+"...";
+                    width = textPaint.measureText(deck_name);
+                    i -= 1;
                 }
+                deck_search_tv.setText(deck_name);
 
                 toolbar_cards_tv.setText(filtered_list.size() + " cards");
                 return true;
@@ -198,17 +205,34 @@ public class CardRecyclerFragment extends Fragment implements SearchView.OnQuery
             }
         }
 
-        if (deck_id == 0){
+        if (deck_id == 0)
+        {
             filtered_list = data;
             adapter.animateTo(filtered_list);
             mRecyclerView.scrollToPosition(0);
+
             deck_search_tv.setText("All Cards");
             toolbar_cards_tv.setText(filtered_list.size() + " cards");
-        } else {
+        }
+        else
+        {
             filtered_list = deck_filter(filtered_list, deck_id);
             adapter.animateTo(filtered_list);
             mRecyclerView.scrollToPosition(0);
-            deck_search_tv.setText(databaseManager.getDeckById(deck_id).getName());
+
+            Paint textPaint = deck_search_tv.getPaint();
+            String deck_name = databaseManager.getDeckById(deck_id).getName();
+            float width = textPaint.measureText(deck_name);
+            int widthint = this.getResources().getDisplayMetrics().widthPixels;
+            float maxwidth = widthint/2;
+            int i = deck_name.length();
+            while (width > maxwidth )
+            {
+                deck_name = deck_name.substring(0, i)+"...";
+                width = textPaint.measureText(deck_name);
+                i -= 1;
+            }
+            deck_search_tv.setText(deck_name);
             toolbar_cards_tv.setText(filtered_list.size() + " cards");
         }
 

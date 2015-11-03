@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -201,7 +202,7 @@ public class DecksRecyclerListAdapter extends RecyclerView.Adapter<DecksRecycler
         public View v;
         public ImageView mPhoto;
         public ImageView mShare;
-        public RelativeLayout swipeLayout;
+        public LinearLayout swipeLayout;
         public TextView mCards;
         public TextView mName;
         public TextView mTime;
@@ -216,7 +217,7 @@ public class DecksRecyclerListAdapter extends RecyclerView.Adapter<DecksRecycler
             mCards = (TextView) itemView.findViewById(R.id.cards);
             mName = (TextView) itemView.findViewById(R.id.name);
             mTime = (TextView) itemView.findViewById(R.id.time);
-            swipeLayout = (RelativeLayout) itemView.findViewById(R.id.swipe_layout);
+            swipeLayout = (LinearLayout) itemView.findViewById(R.id.swipe_layout);
             swipeLayout.setOnClickListener(this);
         }
 

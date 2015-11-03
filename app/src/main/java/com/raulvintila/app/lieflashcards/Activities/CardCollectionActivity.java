@@ -15,28 +15,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-
-import com.raulvintila.app.lieflashcards.Adapters.CardRecyclerListAdapter;
-import com.raulvintila.app.lieflashcards.Adapters.DeckSpinnerAdapter;
 import com.raulvintila.app.lieflashcards.Communication.CustomModel;
-import com.raulvintila.app.lieflashcards.Database.dao.DBCard;
-import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
-import com.raulvintila.app.lieflashcards.Database.manager.DatabaseManager;
-import com.raulvintila.app.lieflashcards.Database.manager.IDatabaseManager;
-import com.raulvintila.app.lieflashcards.Fragments.CardRecyclerFragment;
 import com.raulvintila.app.lieflashcards.R;
-import com.raulvintila.app.lieflashcards.RecyclerItems.CardRecyclerViewItem;
-import com.raulvintila.app.lieflashcards.RecyclerItems.DeckRecyclerViewItem;
-import com.raulvintila.app.lieflashcards.SyncClasses.Card;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CardCollectionActivity extends ActionBarActivity {
 

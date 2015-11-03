@@ -125,7 +125,7 @@ public class RecyclerListViewFragment extends Fragment {
         data = new ArrayList<>();
 
         for(int i = 0; i < decks.size(); i++) {
-            DeckRecyclerViewItem deckRecyclerViewItem = new DeckRecyclerViewItem(i,decks.get(i).getName(),"25 / 70 / 250",R.drawable.ic_language,"1y",new Integer[]{0},20,decks.get(i).getId());
+            DeckRecyclerViewItem deckRecyclerViewItem = new DeckRecyclerViewItem(i,decks.get(i).getName(),"25 / 70 / 250",R.drawable.tsunade,"1y",new Integer[]{0},20,decks.get(i).getId());
             data.add(deckRecyclerViewItem);
         }
 

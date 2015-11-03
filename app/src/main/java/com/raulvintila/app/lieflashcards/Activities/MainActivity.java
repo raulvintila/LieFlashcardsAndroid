@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
                                 deck.setDate_created(new Date());
 
                                 deck = databaseManager.insertDeck(deck);
-                                data.add(0, new DeckRecyclerViewItem(0, input.toString(), "20 / 25 / 122", R.drawable.ic_language, "0m", new Integer[]{0}, 20, deck.getId()));
+                                data.add(0, new DeckRecyclerViewItem(0, input.toString(), "20 / 25 / 122", R.drawable.dog, "0m", new Integer[]{0}, 20, deck.getId()));
 
                                 CustomModel.getInstance().getAdapter().notifyDataSetChanged();
                             }

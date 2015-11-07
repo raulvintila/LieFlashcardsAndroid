@@ -13,7 +13,7 @@ public class DBCardProgress {
     private Long lastStudyDate;
     /** Not-null value. */
     private String version;
-    private long deckId;
+    private long userDeckId;
 
     public DBCardProgress() {
     }
@@ -22,14 +22,14 @@ public class DBCardProgress {
         this.id = id;
     }
 
-    public DBCardProgress(Long id, Long remoteId, double level, double volatility, Long lastStudyDate, String version, long deckId) {
+    public DBCardProgress(Long id, Long remoteId, double level, double volatility, Long lastStudyDate, String version, long userDeckId) {
         this.id = id;
         this.remoteId = remoteId;
         this.level = level;
         this.volatility = volatility;
         this.lastStudyDate = lastStudyDate;
         this.version = version;
-        this.deckId = deckId;
+        this.userDeckId = userDeckId;
     }
 
     public Long getId() {
@@ -82,12 +82,12 @@ public class DBCardProgress {
         this.version = version;
     }
 
-    public long getDeckId() {
-        return deckId;
+    public long getUserDeckId() {
+        return userDeckId;
     }
 
-    public void setDeckId(long deckId) {
-        this.deckId = deckId;
+    public void setUserDeckId(long userDeckId) {
+        this.userDeckId = userDeckId;
     }
 
 }

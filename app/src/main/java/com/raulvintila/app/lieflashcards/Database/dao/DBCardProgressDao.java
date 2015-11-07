@@ -32,7 +32,7 @@ public class DBCardProgressDao extends AbstractDao<DBCardProgress, Long> {
         public final static Property Volatility = new Property(3, double.class, "volatility", false, "VOLATILITY");
         public final static Property LastStudyDate = new Property(4, Long.class, "lastStudyDate", false, "LAST_STUDY_DATE");
         public final static Property Version = new Property(5, String.class, "version", false, "VERSION");
-        public final static Property DeckId = new Property(6, long.class, "deckId", false, "DECK_ID");
+        public final static Property UserDeckId = new Property(6, long.class, "userDeckId", false, "USER_DECK_ID");
     };
 
     private Query<DBCardProgress> dBUserDeck_CardsProgressQuery;
@@ -55,7 +55,7 @@ public class DBCardProgressDao extends AbstractDao<DBCardProgress, Long> {
                 "'VOLATILITY' REAL NOT NULL ," + // 3: volatility
                 "'LAST_STUDY_DATE' INTEGER," + // 4: lastStudyDate
                 "'VERSION' TEXT NOT NULL ," + // 5: version
-                "'DECK_ID' INTEGER NOT NULL );"); // 6: deckId
+                "'USER_DECK_ID' INTEGER NOT NULL );"); // 6: userDeckId
     }
 
     /** Drops the underlying database table. */
@@ -86,7 +86,7 @@ public class DBCardProgressDao extends AbstractDao<DBCardProgress, Long> {
             stmt.bindLong(5, lastStudyDate);
         }
         stmt.bindString(6, entity.getVersion());
-        stmt.bindLong(7, entity.getDeckId());
+        stmt.bindLong(7, entity.getUserDeckId());
     }
 
     /** @inheritdoc */
@@ -105,7 +105,7 @@ public class DBCardProgressDao extends AbstractDao<DBCardProgress, Long> {
             cursor.getDouble(offset + 3), // volatility
             cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // lastStudyDate
             cursor.getString(offset + 5), // version
-            cursor.getLong(offset + 6) // deckId
+            cursor.getLong(offset + 6) // userDeckId
         );
         return entity;
     }
@@ -119,7 +119,7 @@ public class DBCardProgressDao extends AbstractDao<DBCardProgress, Long> {
         entity.setVolatility(cursor.getDouble(offset + 3));
         entity.setLastStudyDate(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
         entity.setVersion(cursor.getString(offset + 5));
-        entity.setDeckId(cursor.getLong(offset + 6));
+        entity.setUserDeckId(cursor.getLong(offset + 6));
      }
     
     /** @inheritdoc */
@@ -146,16 +146,16 @@ public class DBCardProgressDao extends AbstractDao<DBCardProgress, Long> {
     }
     
     /** Internal query to resolve the "cardsProgress" to-many relationship of DBUserDeck. */
-    public List<DBCardProgress> _queryDBUserDeck_CardsProgress(long deckId) {
+    public List<DBCardProgress> _queryDBUserDeck_CardsProgress(long userDeckId) {
         synchronized (this) {
             if (dBUserDeck_CardsProgressQuery == null) {
                 QueryBuilder<DBCardProgress> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.DeckId.eq(null));
+                queryBuilder.where(Properties.UserDeckId.eq(null));
                 dBUserDeck_CardsProgressQuery = queryBuilder.build();
             }
         }
         Query<DBCardProgress> query = dBUserDeck_CardsProgressQuery.forCurrentThread();
-        query.setParameter(0, deckId);
+        query.setParameter(0, userDeckId);
         return query.list();
     }
 

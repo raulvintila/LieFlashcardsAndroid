@@ -1,9 +1,7 @@
 package com.raulvintila.app.lieflashcards.SyncClasses;
 
-import com.raulvintila.app.lieflashcards.Communication.CustomModel;
 import com.raulvintila.app.lieflashcards.Database.dao.DBCard;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
-import com.raulvintila.app.lieflashcards.Database.manager.DatabaseManager;
 import com.raulvintila.app.lieflashcards.Database.manager.IDatabaseManager;
 import com.raulvintila.app.lieflashcards.Utils.NetworkUtils;
 

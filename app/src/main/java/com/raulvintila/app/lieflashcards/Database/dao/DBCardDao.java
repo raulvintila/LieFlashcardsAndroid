@@ -30,18 +30,10 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property RemoteId = new Property(1, Long.class, "remoteId", false, "REMOTE_ID");
-        public final static Property Question = new Property(2, String.class, "question", false, "QUESTION");
-        public final static Property Question_type = new Property(3, String.class, "question_type", false, "QUESTION_TYPE");
-        public final static Property Answer = new Property(4, String.class, "answer", false, "ANSWER");
-        public final static Property Answer_type = new Property(5, String.class, "answer_type", false, "ANSWER_TYPE");
-        public final static Property Hint = new Property(6, String.class, "hint", false, "HINT");
-        public final static Property Hint_type = new Property(7, String.class, "hint_type", false, "HINT_TYPE");
-        public final static Property Last_study = new Property(8, java.util.Date.class, "last_study", false, "LAST_STUDY");
-        public final static Property Date_created = new Property(9, java.util.Date.class, "date_created", false, "DATE_CREATED");
-        public final static Property Current_level = new Property(10, Double.class, "current_level", false, "CURRENT_LEVEL");
-        public final static Property Volatility = new Property(11, Double.class, "volatility", false, "VOLATILITY");
-        public final static Property DeckId = new Property(12, long.class, "deckId", false, "DECK_ID");
-        public final static Property CardId = new Property(13, long.class, "cardId", false, "CARD_ID");
+        public final static Property LayoutType = new Property(2, String.class, "layoutType", false, "LAYOUT_TYPE");
+        public final static Property Tags = new Property(3, String.class, "tags", false, "TAGS");
+        public final static Property DeckId = new Property(4, long.class, "deckId", false, "DECK_ID");
+        public final static Property CardId = new Property(5, long.class, "cardId", false, "CARD_ID");
     };
 
     private DaoSession daoSession;
@@ -63,18 +55,10 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
         db.execSQL("CREATE TABLE " + constraint + "'DBCARD' (" + //
                 "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "'REMOTE_ID' INTEGER UNIQUE ," + // 1: remoteId
-                "'QUESTION' TEXT NOT NULL ," + // 2: question
-                "'QUESTION_TYPE' TEXT NOT NULL ," + // 3: question_type
-                "'ANSWER' TEXT NOT NULL ," + // 4: answer
-                "'ANSWER_TYPE' TEXT NOT NULL ," + // 5: answer_type
-                "'HINT' TEXT," + // 6: hint
-                "'HINT_TYPE' TEXT," + // 7: hint_type
-                "'LAST_STUDY' INTEGER," + // 8: last_study
-                "'DATE_CREATED' INTEGER," + // 9: date_created
-                "'CURRENT_LEVEL' REAL," + // 10: current_level
-                "'VOLATILITY' REAL," + // 11: volatility
-                "'DECK_ID' INTEGER NOT NULL ," + // 12: deckId
-                "'CARD_ID' INTEGER NOT NULL );"); // 13: cardId
+                "'LAYOUT_TYPE' TEXT NOT NULL ," + // 2: layoutType
+                "'TAGS' TEXT," + // 3: tags
+                "'DECK_ID' INTEGER NOT NULL ," + // 4: deckId
+                "'CARD_ID' INTEGER NOT NULL );"); // 5: cardId
     }
 
     /** Drops the underlying database table. */
@@ -97,41 +81,13 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
         if (remoteId != null) {
             stmt.bindLong(2, remoteId);
         }
-        stmt.bindString(3, entity.getQuestion());
-        stmt.bindString(4, entity.getQuestion_type());
-        stmt.bindString(5, entity.getAnswer());
-        stmt.bindString(6, entity.getAnswer_type());
+        stmt.bindString(3, entity.getLayoutType());
  
-        String hint = entity.getHint();
-        if (hint != null) {
-            stmt.bindString(7, hint);
+        String tags = entity.getTags();
+        if (tags != null) {
+            stmt.bindString(4, tags);
         }
- 
-        String hint_type = entity.getHint_type();
-        if (hint_type != null) {
-            stmt.bindString(8, hint_type);
-        }
- 
-        java.util.Date last_study = entity.getLast_study();
-        if (last_study != null) {
-            stmt.bindLong(9, last_study.getTime());
-        }
- 
-        java.util.Date date_created = entity.getDate_created();
-        if (date_created != null) {
-            stmt.bindLong(10, date_created.getTime());
-        }
- 
-        Double current_level = entity.getCurrent_level();
-        if (current_level != null) {
-            stmt.bindDouble(11, current_level);
-        }
- 
-        Double volatility = entity.getVolatility();
-        if (volatility != null) {
-            stmt.bindDouble(12, volatility);
-        }
-        stmt.bindLong(13, entity.getDeckId());
+        stmt.bindLong(5, entity.getDeckId());
     }
 
     @Override
@@ -152,17 +108,9 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
         DBCard entity = new DBCard( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // remoteId
-            cursor.getString(offset + 2), // question
-            cursor.getString(offset + 3), // question_type
-            cursor.getString(offset + 4), // answer
-            cursor.getString(offset + 5), // answer_type
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // hint
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // hint_type
-            cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)), // last_study
-            cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)), // date_created
-            cursor.isNull(offset + 10) ? null : cursor.getDouble(offset + 10), // current_level
-            cursor.isNull(offset + 11) ? null : cursor.getDouble(offset + 11), // volatility
-            cursor.getLong(offset + 12) // deckId
+            cursor.getString(offset + 2), // layoutType
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // tags
+            cursor.getLong(offset + 4) // deckId
         );
         return entity;
     }
@@ -172,17 +120,9 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
     public void readEntity(Cursor cursor, DBCard entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setRemoteId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setQuestion(cursor.getString(offset + 2));
-        entity.setQuestion_type(cursor.getString(offset + 3));
-        entity.setAnswer(cursor.getString(offset + 4));
-        entity.setAnswer_type(cursor.getString(offset + 5));
-        entity.setHint(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setHint_type(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setLast_study(cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)));
-        entity.setDate_created(cursor.isNull(offset + 9) ? null : new java.util.Date(cursor.getLong(offset + 9)));
-        entity.setCurrent_level(cursor.isNull(offset + 10) ? null : cursor.getDouble(offset + 10));
-        entity.setVolatility(cursor.isNull(offset + 11) ? null : cursor.getDouble(offset + 11));
-        entity.setDeckId(cursor.getLong(offset + 12));
+        entity.setLayoutType(cursor.getString(offset + 2));
+        entity.setTags(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setDeckId(cursor.getLong(offset + 4));
      }
     
     /** @inheritdoc */

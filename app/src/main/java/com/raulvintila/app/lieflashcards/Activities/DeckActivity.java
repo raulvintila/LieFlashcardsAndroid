@@ -1,8 +1,6 @@
 package com.raulvintila.app.lieflashcards.Activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,10 +11,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.support.v4.view.ViewPager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -29,15 +23,11 @@ import com.raulvintila.app.lieflashcards.Communication.CustomModel;
 import com.raulvintila.app.lieflashcards.Database.dao.DBCard;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
 import com.raulvintila.app.lieflashcards.Database.manager.IDatabaseManager;
-import com.raulvintila.app.lieflashcards.Fragments.DeckSettingsFragment;
-import com.raulvintila.app.lieflashcards.Fragments.DeckStatisticsFragment;
-import com.raulvintila.app.lieflashcards.Fragments.DeckOverviewFragment;
 import com.raulvintila.app.lieflashcards.MyApplication;
 import com.raulvintila.app.lieflashcards.RecyclerItems.DeckRecyclerViewItem;
 import com.raulvintila.app.lieflashcards.R;
 import com.raulvintila.app.lieflashcards.Utils.Algorithms.SpacedLearningAlgoUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

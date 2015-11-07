@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -21,7 +20,6 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -32,47 +30,24 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.Gson;
 import com.raulvintila.app.lieflashcards.AsyncLogin;
 import com.raulvintila.app.lieflashcards.AsyncSynchronize;
 import com.raulvintila.app.lieflashcards.Communication.CustomModel;
 import com.raulvintila.app.lieflashcards.Communication.TaskHelper;
 import com.raulvintila.app.lieflashcards.Communication.UserId;
-import com.raulvintila.app.lieflashcards.Fragments.TaskFragment;
 import com.raulvintila.app.lieflashcards.MyApplication;
-import com.raulvintila.app.lieflashcards.Password;
 import com.raulvintila.app.lieflashcards.RecyclerItems.DeckRecyclerViewItem;
 import com.raulvintila.app.lieflashcards.R;
-import com.raulvintila.app.lieflashcards.SyncClasses.Card;
-import com.raulvintila.app.lieflashcards.SyncClasses.CreateCardWrapper;
 import com.raulvintila.app.lieflashcards.SyncClasses.Deck;
-import com.raulvintila.app.lieflashcards.SyncClasses.RequestReturnedMessage;
-import com.raulvintila.app.lieflashcards.SyncClasses.UserData;
-import com.raulvintila.app.lieflashcards.SyncClasses.WrappedCardRRM;
-import com.raulvintila.app.lieflashcards.SyncClasses.WrappedDeckRRM;
 import com.raulvintila.app.lieflashcards.Database.dao.DBCard;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
-import com.raulvintila.app.lieflashcards.Database.manager.DatabaseManager;
 import com.raulvintila.app.lieflashcards.Database.manager.IDatabaseManager;
-import com.raulvintila.app.lieflashcards.Utils.AsyncTaskUtils;
 import com.raulvintila.app.lieflashcards.Utils.NetworkUtils;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity {

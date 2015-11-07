@@ -3,7 +3,6 @@ package com.raulvintila.app.lieflashcards.Utils;
 import android.app.Activity;
 import android.os.AsyncTask;
 
-import com.google.gson.Gson;
 import com.raulvintila.app.lieflashcards.Activities.MainActivity;
 import com.raulvintila.app.lieflashcards.Communication.CustomModel;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
@@ -11,26 +10,11 @@ import com.raulvintila.app.lieflashcards.Database.manager.DatabaseManager;
 import com.raulvintila.app.lieflashcards.Database.manager.IDatabaseManager;
 import com.raulvintila.app.lieflashcards.Fragments.TaskFragment;
 import com.raulvintila.app.lieflashcards.SyncClasses.Card;
-import com.raulvintila.app.lieflashcards.SyncClasses.CreateCardWrapper;
 import com.raulvintila.app.lieflashcards.SyncClasses.Deck;
-import com.raulvintila.app.lieflashcards.SyncClasses.RequestReturnedMessage;
 import com.raulvintila.app.lieflashcards.Database.dao.DBCard;
 import com.raulvintila.app.lieflashcards.SyncClasses.SyncWorker;
 import com.raulvintila.app.lieflashcards.SyncClasses.UserData;
-import com.raulvintila.app.lieflashcards.SyncClasses.WrappedCardRRM;
-import com.raulvintila.app.lieflashcards.SyncClasses.WrappedDeckRRM;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AsyncTaskUtils {

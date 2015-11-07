@@ -35,7 +35,7 @@ public class DBCardProgressDao extends AbstractDao<DBCardProgress, Long> {
         public final static Property DeckId = new Property(6, long.class, "deckId", false, "DECK_ID");
     };
 
-    private Query<DBCardProgress> dBCard_CardsProgressQuery;
+    private Query<DBCardProgress> dBUserDeck_CardsProgressQuery;
 
     public DBCardProgressDao(DaoConfig config) {
         super(config);
@@ -145,16 +145,16 @@ public class DBCardProgressDao extends AbstractDao<DBCardProgress, Long> {
         return true;
     }
     
-    /** Internal query to resolve the "cardsProgress" to-many relationship of DBCard. */
-    public List<DBCardProgress> _queryDBCard_CardsProgress(long deckId) {
+    /** Internal query to resolve the "cardsProgress" to-many relationship of DBUserDeck. */
+    public List<DBCardProgress> _queryDBUserDeck_CardsProgress(long deckId) {
         synchronized (this) {
-            if (dBCard_CardsProgressQuery == null) {
+            if (dBUserDeck_CardsProgressQuery == null) {
                 QueryBuilder<DBCardProgress> queryBuilder = queryBuilder();
                 queryBuilder.where(Properties.DeckId.eq(null));
-                dBCard_CardsProgressQuery = queryBuilder.build();
+                dBUserDeck_CardsProgressQuery = queryBuilder.build();
             }
         }
-        Query<DBCardProgress> query = dBCard_CardsProgressQuery.forCurrentThread();
+        Query<DBCardProgress> query = dBUserDeck_CardsProgressQuery.forCurrentThread();
         query.setParameter(0, deckId);
         return query.list();
     }

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.raulvintila.app.lieflashcards.Activities.CardCollectionActivity;
 import com.raulvintila.app.lieflashcards.Communication.CustomModel;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
 import com.raulvintila.app.lieflashcards.R;

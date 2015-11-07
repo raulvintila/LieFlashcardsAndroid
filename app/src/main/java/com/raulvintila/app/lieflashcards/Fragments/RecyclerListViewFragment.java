@@ -23,13 +23,9 @@ import com.raulvintila.app.lieflashcards.UI.ItemTouchHelper.DecksItemTouchHelper
 import com.raulvintila.app.lieflashcards.Adapters.DecksRecyclerListAdapter;
 import com.raulvintila.app.lieflashcards.R;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
-import com.raulvintila.app.lieflashcards.Database.manager.DatabaseManager;
 import com.raulvintila.app.lieflashcards.Database.manager.IDatabaseManager;
-import com.raulvintila.app.lieflashcards.Communication.yolo;
 
 import net.i2p.android.ext.floatingactionbutton.FloatingActionButton;
-
-import de.greenrobot.event.EventBus;
 
 public class RecyclerListViewFragment extends Fragment {
 

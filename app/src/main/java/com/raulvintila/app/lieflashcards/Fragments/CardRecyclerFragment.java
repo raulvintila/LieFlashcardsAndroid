@@ -1,9 +1,6 @@
 package com.raulvintila.app.lieflashcards.Fragments;
 
-import android.app.Activity;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
@@ -15,33 +12,24 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.raulvintila.app.lieflashcards.Activities.CardCollectionActivity;
 import com.raulvintila.app.lieflashcards.Adapters.CardRecyclerListAdapter;
-import com.raulvintila.app.lieflashcards.Adapters.DeckSpinnerAdapter;
 import com.raulvintila.app.lieflashcards.Communication.CustomModel;
-import com.raulvintila.app.lieflashcards.Communication.TaskHelper;
 import com.raulvintila.app.lieflashcards.Database.dao.DBCard;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
-import com.raulvintila.app.lieflashcards.Database.manager.DatabaseManager;
 import com.raulvintila.app.lieflashcards.Database.manager.IDatabaseManager;
 import com.raulvintila.app.lieflashcards.MyApplication;
 import com.raulvintila.app.lieflashcards.R;
-import com.raulvintila.app.lieflashcards.SyncClasses.Card;
 
 import java.util.ArrayList;
 import java.util.List;

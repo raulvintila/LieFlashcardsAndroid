@@ -7,14 +7,12 @@ import android.graphics.Paint;
 import android.os.Handler;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nineoldandroids.view.ViewHelper;
@@ -28,7 +26,6 @@ import com.raulvintila.app.lieflashcards.Communication.CustomModel;
 import com.raulvintila.app.lieflashcards.Database.dao.DBCard;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
 import com.raulvintila.app.lieflashcards.Database.manager.IDatabaseManager;
-import com.raulvintila.app.lieflashcards.SyncClasses.Deck;
 import com.raulvintila.app.lieflashcards.UI.ItemTouchHelper.DecksItemTouchHelperAdapter;
 import com.raulvintila.app.lieflashcards.UI.ItemTouchHelper.DecksItemTouchHelperViewHolder;
 import com.raulvintila.app.lieflashcards.R;

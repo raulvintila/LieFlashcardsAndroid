@@ -1,23 +1,17 @@
 package com.raulvintila.app.lieflashcards.Fragments;
 
-import android.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.raulvintila.app.lieflashcards.Activities.DeckActivity;
 import com.raulvintila.app.lieflashcards.Communication.CustomModel;
-import com.raulvintila.app.lieflashcards.Communication.TaskHelper;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
-import com.raulvintila.app.lieflashcards.Database.manager.DatabaseManager;
 import com.raulvintila.app.lieflashcards.Database.manager.IDatabaseManager;
 import com.raulvintila.app.lieflashcards.DeckModeChange;
-import com.raulvintila.app.lieflashcards.MyApplication;
 import com.raulvintila.app.lieflashcards.R;
 
 import de.greenrobot.event.EventBus;

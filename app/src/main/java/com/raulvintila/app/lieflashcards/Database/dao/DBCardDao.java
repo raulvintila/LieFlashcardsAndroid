@@ -4,13 +4,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import de.greenrobot.dao.internal.DaoConfig;
-import de.greenrobot.dao.internal.SqlUtils;
 import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.QueryBuilder;
 
@@ -28,15 +26,12 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property RemoteId = new Property(1, Long.class, "remoteId", false, "REMOTE_ID");
-        public final static Property LayoutType = new Property(2, String.class, "layoutType", false, "LAYOUT_TYPE");
-        public final static Property Tags = new Property(3, String.class, "tags", false, "TAGS");
-        public final static Property DeckId = new Property(4, long.class, "deckId", false, "DECK_ID");
-        public final static Property CardId = new Property(5, long.class, "cardId", false, "CARD_ID");
+        public final static Property RemoteId = new Property(0, Long.class, "remoteId", false, "REMOTE_ID");
+        public final static Property LayoutType = new Property(1, String.class, "layoutType", false, "LAYOUT_TYPE");
+        public final static Property Tags = new Property(2, String.class, "tags", false, "TAGS");
+        public final static Property DeckId = new Property(3, long.class, "deckId", false, "DECK_ID");
+        public final static Property Id = new Property(4, Long.class, "id", true, "_id");
     };
-
-    private DaoSession daoSession;
 
     private Query<DBCard> dBDeck_CardsQuery;
 
@@ -46,19 +41,17 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
     
     public DBCardDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
-        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'DBCARD' (" + //
-                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "'REMOTE_ID' INTEGER UNIQUE ," + // 1: remoteId
-                "'LAYOUT_TYPE' TEXT NOT NULL ," + // 2: layoutType
-                "'TAGS' TEXT," + // 3: tags
-                "'DECK_ID' INTEGER NOT NULL ," + // 4: deckId
-                "'CARD_ID' INTEGER NOT NULL );"); // 5: cardId
+                "'REMOTE_ID' INTEGER UNIQUE ," + // 0: remoteId
+                "'LAYOUT_TYPE' TEXT NOT NULL ," + // 1: layoutType
+                "'TAGS' TEXT," + // 2: tags
+                "'DECK_ID' INTEGER NOT NULL ," + // 3: deckId
+                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT );"); // 4: id
     }
 
     /** Drops the underlying database table. */
@@ -72,45 +65,39 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
     protected void bindValues(SQLiteStatement stmt, DBCard entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
- 
         Long remoteId = entity.getRemoteId();
         if (remoteId != null) {
-            stmt.bindLong(2, remoteId);
+            stmt.bindLong(1, remoteId);
         }
-        stmt.bindString(3, entity.getLayoutType());
+        stmt.bindString(2, entity.getLayoutType());
  
         String tags = entity.getTags();
         if (tags != null) {
-            stmt.bindString(4, tags);
+            stmt.bindString(3, tags);
         }
-        stmt.bindLong(5, entity.getDeckId());
-    }
-
-    @Override
-    protected void attachEntity(DBCard entity) {
-        super.attachEntity(entity);
-        entity.__setDaoSession(daoSession);
+        stmt.bindLong(4, entity.getDeckId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(5, id);
+        }
     }
 
     /** @inheritdoc */
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4);
     }    
 
     /** @inheritdoc */
     @Override
     public DBCard readEntity(Cursor cursor, int offset) {
         DBCard entity = new DBCard( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // remoteId
-            cursor.getString(offset + 2), // layoutType
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // tags
-            cursor.getLong(offset + 4) // deckId
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // remoteId
+            cursor.getString(offset + 1), // layoutType
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // tags
+            cursor.getLong(offset + 3), // deckId
+            cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4) // id
         );
         return entity;
     }
@@ -118,11 +105,11 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, DBCard entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setRemoteId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setLayoutType(cursor.getString(offset + 2));
-        entity.setTags(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setDeckId(cursor.getLong(offset + 4));
+        entity.setRemoteId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setLayoutType(cursor.getString(offset + 1));
+        entity.setTags(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setDeckId(cursor.getLong(offset + 3));
+        entity.setId(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
      }
     
     /** @inheritdoc */
@@ -162,97 +149,4 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
         return query.list();
     }
 
-    private String selectDeep;
-
-    protected String getSelectDeep() {
-        if (selectDeep == null) {
-            StringBuilder builder = new StringBuilder("SELECT ");
-            SqlUtils.appendColumns(builder, "T", getAllColumns());
-            builder.append(',');
-            SqlUtils.appendColumns(builder, "T0", daoSession.getDBCardContentDao().getAllColumns());
-            builder.append(" FROM DBCARD T");
-            builder.append(" LEFT JOIN DBCARD_CONTENT T0 ON T.'CARD_ID'=T0.'_id'");
-            builder.append(' ');
-            selectDeep = builder.toString();
-        }
-        return selectDeep;
-    }
-    
-    protected DBCard loadCurrentDeep(Cursor cursor, boolean lock) {
-        DBCard entity = loadCurrent(cursor, 0, lock);
-        int offset = getAllColumns().length;
-
-        DBCardContent card = loadCurrentOther(daoSession.getDBCardContentDao(), cursor, offset);
-         if(card != null) {
-            entity.setCard(card);
-        }
-
-        return entity;    
-    }
-
-    public DBCard loadDeep(Long key) {
-        assertSinglePk();
-        if (key == null) {
-            return null;
-        }
-
-        StringBuilder builder = new StringBuilder(getSelectDeep());
-        builder.append("WHERE ");
-        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
-        String sql = builder.toString();
-        
-        String[] keyArray = new String[] { key.toString() };
-        Cursor cursor = db.rawQuery(sql, keyArray);
-        
-        try {
-            boolean available = cursor.moveToFirst();
-            if (!available) {
-                return null;
-            } else if (!cursor.isLast()) {
-                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
-            }
-            return loadCurrentDeep(cursor, true);
-        } finally {
-            cursor.close();
-        }
-    }
-    
-    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
-    public List<DBCard> loadAllDeepFromCursor(Cursor cursor) {
-        int count = cursor.getCount();
-        List<DBCard> list = new ArrayList<DBCard>(count);
-        
-        if (cursor.moveToFirst()) {
-            if (identityScope != null) {
-                identityScope.lock();
-                identityScope.reserveRoom(count);
-            }
-            try {
-                do {
-                    list.add(loadCurrentDeep(cursor, false));
-                } while (cursor.moveToNext());
-            } finally {
-                if (identityScope != null) {
-                    identityScope.unlock();
-                }
-            }
-        }
-        return list;
-    }
-    
-    protected List<DBCard> loadDeepAllAndCloseCursor(Cursor cursor) {
-        try {
-            return loadAllDeepFromCursor(cursor);
-        } finally {
-            cursor.close();
-        }
-    }
-    
-
-    /** A raw-style query where you can pass any WHERE clause and arguments. */
-    public List<DBCard> queryDeep(String where, String... selectionArg) {
-        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
-        return loadDeepAllAndCloseCursor(cursor);
-    }
- 
 }

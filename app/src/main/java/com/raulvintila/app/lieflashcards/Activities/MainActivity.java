@@ -40,6 +40,7 @@ import com.raulvintila.app.lieflashcards.AsyncSynchronize;
 import com.raulvintila.app.lieflashcards.Communication.CustomModel;
 import com.raulvintila.app.lieflashcards.Communication.TaskHelper;
 import com.raulvintila.app.lieflashcards.Communication.UserId;
+import com.raulvintila.app.lieflashcards.Database.dao.DBUser;
 import com.raulvintila.app.lieflashcards.Database.dao.DBUserDeck;
 import com.raulvintila.app.lieflashcards.MyApplication;
 import com.raulvintila.app.lieflashcards.RecyclerItems.DeckRecyclerViewItem;
@@ -183,13 +184,26 @@ public class MainActivity extends AppCompatActivity {
                                 deck.setIcon(R.drawable.dog);
                                 userDeck.setCardsPerDay(20);
                                 userDeck.setStatus("normal");
-                                //userDeck.setPosition(0);
+                                userDeck.setPosition(Integer.parseInt(input.toString()));
                                 deck.setDateCreated(new Date().getTime());
                                 deck.setAuthor("Sal");
                                 deck.setVersion("0");
                                 deck.setMinAppVersion("0");
 
+                                DBUser user = new DBUser();
+                                user.setName("Kilograme");
+                                user.setOrderBy("name");
+                                user.setEmail("carnagiu@usovm"+ input.toString());
+                                user.setPassowrd("dsadada");
+                                user.setSalt("wqdq");
+                                user.setVersion("0");
+                                user.setIcon("dsada");
+                                user.setDateCreated(120);
+
+                                user = databaseManager.insertUser(user);
                                 deck = databaseManager.insertDeck(deck);
+                                userDeck.setDeckId(deck.getId());
+                                userDeck.setUserId(user.getId());
                                 databaseManager.insertUserDeck(userDeck);
                                 data.add(0, new DeckRecyclerViewItem(0, input.toString(), "20 / 25 / 122", R.drawable.tsunade, "0m", 20, deck.getId()));
 

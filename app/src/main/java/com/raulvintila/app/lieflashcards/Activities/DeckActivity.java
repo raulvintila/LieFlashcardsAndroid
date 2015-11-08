@@ -225,7 +225,7 @@ public class DeckActivity extends AppCompatActivity {
         deck_total_cards.setText(""+deck.getCards().size());
 
         TextView deck_due_today_stats = (TextView) findViewById(R.id.due_today_stats);
-        String deck_cards_per_day = "20";//+userDeck.getCardsPerDay();
+        String deck_cards_per_day = ""+userDeck.getCardsPerDay();
         String text = "<font color=#1976D2>"+deck_cards_per_day+"</font> <font color=#008800> 2</font> <font color=#bb0000> 6</font>";
         deck_due_today_stats.setText(Html.fromHtml(text));
 

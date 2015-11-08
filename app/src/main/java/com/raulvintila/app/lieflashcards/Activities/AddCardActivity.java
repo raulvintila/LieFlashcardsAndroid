@@ -297,9 +297,9 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
         /*Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(0);*/
 
-        int cardContentSize = values.size();
-        int questionSize = Integer.parseInt(layoutType.split("_")[0]);
+        /*int questionSize = Integer.parseInt(layoutType.split("_")[0]);
         int answerSize = Integer.parseInt(layoutType.split("_")[1]);
+
 
         for ( int i = 0 ; i < questionSize ; i++)
         {
@@ -317,8 +317,18 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
                 values.set(i,back_path);
             }
 
+        }*/
+
+
+        if(types.get(0).equals("audio") || types.get(0).equals("image"))
+        {
+            values.set(0,front_path);
         }
 
+        if(types.get(1).equals("audio") || types.get(1).equals("image"))
+        {
+            values.set(1,back_path);
+        }
 
 
         /*if (card_type.equals("text_text")) {
@@ -356,7 +366,14 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
         // difficulty is type "frontType_backType"
         card.setLayoutType(layoutType);
         //card.setDate_creted(date_created);
-        CardContentListFactory.create(card, version, values, types);
+        databaseManager.insertCard(card);
+
+        List<DBCardContent> cardContents = CardContentListFactory.create(card, version, values, types);
+
+        for( DBCardContent cardContent : cardContents)
+        {
+            databaseManager.insertOrUpdateCardContent(cardContent);
+        }
 
 
         databaseManager.insertOrUpdateCard(card);
@@ -556,23 +573,24 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
                                 values.add(back.getText().toString());
 
                                 List<String> types = new ArrayList<String>();
-                                values.add(card_type.split("_")[0]);
-                                values.add(card_type.split("_")[1]);
+                                types.add(card_type.split("_")[0]);
+                                types.add(card_type.split("_")[1]);
 
                                /* Calendar calendar = Calendar.getInstance();
                                 calendar.setTimeInMillis(0)*/;
 
                                 DBCardProgress cardProgress = new DBCardProgress();
-                                cardProgress.setId(dbCard.getId());
                                 cardProgress.setLastStudyDate(new Date().getTime());
                                 cardProgress.setLevel(0.0);
                                 cardProgress.setVolatility(1.0);
                                 cardProgress.setVersion("0");
-                                databaseManager.insertCardProgress(cardProgress);
+                                //databaseManager.insertCardProgress(cardProgress);
 
 
-                                createOrUpdateCard(dbCard,dbDeck,cardProgress.getVersion(),"1_1", values, types);
+                                createOrUpdateCard(dbCard, dbDeck, cardProgress.getVersion(), "1_1", values, types);
                                 databaseManager.insertOrUpdateDeck(dbDeck);
+                                cardProgress.setId(dbCard.getId());
+                                databaseManager.insertCardProgress(cardProgress);
 
                                 Toast.makeText(getApplicationContext(), "Card created", Toast.LENGTH_SHORT).show();
 
@@ -587,6 +605,7 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
                                 DBCard card = databaseManager.getCardById(card_id);
                                 DBDeck db_deck = databaseManager.getDeckById(deckIds.get(index));
                                 DBDeck old_deck = databaseManager.getDeckById(card.getDeckId());
+                                DBCardContent cardContent = databaseManager.getCardContentByCardId(card_id);
                                 if (db_deck.getId() != old_deck.getId()) {
 
                                     databaseManager.deleteCardById(card_id);

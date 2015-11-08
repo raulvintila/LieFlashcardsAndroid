@@ -90,27 +90,27 @@ public class AsyncTaskUtils {
                         /* This deck is already in the remote DB, we are looking for possible updates */
                         else {
                             
-                            /* Update the deck on the server */
+                            /* Update the deck on the server *//*
                             deck = doWork.updateRemoteDeck(deck);
                             
                             List<DBCard> local_cards = databaseManager.getCardsByDeckId(local_decks.get(k).getId());
                             List<Card> remote_cards = user_data.getDeckbyId(deck.getRemoteId()).getDeck_cards();
                             
-                            /* Deletes Deck cards on the server */
+                            *//* Deletes Deck cards on the server *//*
                             doWork.deleteRemoteCards(local_cards, remote_cards);
                             
 
                             for (int i = 0; i<local_cards.size();i++) {
                                 DBCard card = local_cards.get(i);
                                 if (local_cards.get(i).getRemoteId() == null) {
-                                    /* Inserting the new card on the server */
+                                    *//* Inserting the new card on the server *//*
                                     doWork.createRemoteCard(card, deck);
                                 } 
-                                /* This card is already in the remote DB, we are looking for possible updates */
+                                *//* This card is already in the remote DB, we are looking for possible updates *//*
                                 else {
                                     doWork.updateRemoteCard(card);
                                 }
-                            }
+                            }*/
                         }
 
 

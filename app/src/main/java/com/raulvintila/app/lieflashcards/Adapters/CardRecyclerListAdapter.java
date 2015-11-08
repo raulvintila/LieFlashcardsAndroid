@@ -44,31 +44,31 @@ public class CardRecyclerListAdapter extends RecyclerView.Adapter<CardRecyclerLi
 
         final DBCard card_item = mData.get(position);
 
-        if(mData.get(position).getDifficulty().split("_")[0].equals("audio") )
+        if(mData.get(position).getCardContents().get(0).getType().equals("audio") )
         {
             holder.question.setText("[Audio]");
         }
-        else if (mData.get(position).getDifficulty().split("_")[0].equals("image"))
+        else if (mData.get(position).getCardContents().get(0).getType().equals("image"))
         {
             holder.question.setText("[Image]");
 
         }
         else
         {
-            holder.question.setText(mData.get(position).getQuestion());
+            holder.question.setText(mData.get(position).getCardContents().get(0).getValue());
         }
         
-        if(mData.get(position).getDifficulty().split("_")[1].equals("audio"))
+        if(mData.get(position).getCardContents().get(1).getType().equals("audio"))
         {
             holder.answer.setText("[Audio]");
         }
-        else if (mData.get(position).getDifficulty().split("_")[1].equals("image"))
+        else if (mData.get(position).getCardContents().get(1).getType().equals("image"))
         {
             holder.answer.setText("[Image]");
         }
         else
         {
-            holder.answer.setText(mData.get(position).getAnswer());
+            holder.answer.setText(mData.get(position).getCardContents().get(1).getValue());
         }
         
         holder.view_holder_listener = new MyViewHolder.ViewHolderListener() {
@@ -112,17 +112,17 @@ public class CardRecyclerListAdapter extends RecyclerView.Adapter<CardRecyclerLi
         }
 
         public void question_bind(DBCard card_item) {
-            if(card_item.getDifficulty().split("_")[0].equals("audio"))
+            if(card_item.getCardContents().get(0).getType().equals("audio"))
             {
                 question.setText("[Audio]");
             }
-            else if (card_item.getDifficulty().split("_")[0].equals("image"))
+            else if (card_item.getCardContents().get(0).getType().equals("image"))
             {
                 question.setText("[Image]");
             }
             else
             {
-                question.setText(card_item.getQuestion());
+                question.setText(card_item.getCardContents().get(0).getValue());//getQuestion());
             }
 
 
@@ -130,17 +130,17 @@ public class CardRecyclerListAdapter extends RecyclerView.Adapter<CardRecyclerLi
         }
 
         public void answer_bind(DBCard card_item) {
-            if(card_item.getDifficulty().split("_")[1].equals("audio"))
+            if(card_item.getCardContents().get(1).getType().equals("audio"))
             {
                 answer.setText("[Audio]");
             }
-            else if (card_item.getDifficulty().split("_")[1].equals("image"))
+            else if (card_item.getCardContents().get(1).getType().equals("image"))
             {
                 answer.setText("[Image]");
             }
             else
             {
-                answer.setText(card_item.getAnswer());
+                answer.setText(card_item.getCardContents().get(1).getValue());//getAnswer());
             }
         }
 

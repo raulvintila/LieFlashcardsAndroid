@@ -37,8 +37,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.raulvintila.app.lieflashcards.CardContentListFactory;
 import com.raulvintila.app.lieflashcards.Communication.CustomModel;
+import com.raulvintila.app.lieflashcards.Database.dao.DBCardContent;
+import com.raulvintila.app.lieflashcards.Database.dao.DBCardProgress;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
+import com.raulvintila.app.lieflashcards.Database.dao.DBUserDeck;
 import com.raulvintila.app.lieflashcards.Database.manager.DatabaseManager;
 import com.raulvintila.app.lieflashcards.ImagePathBUS;
 import com.raulvintila.app.lieflashcards.RecyclerItems.DeckRecyclerViewItem;
@@ -52,6 +56,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -151,6 +156,12 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
         final Intent intent = new Intent(this, PlayDeckActivity.class);
         intent.putExtra("is_preview", true);
         intent.putExtra("card_type", card_type);
+        //intent.putParcelableArrayListExtra("card type", card_type);
+       /* String[] types = card_type.split("_");
+        for ( int i = 0 ; i < types.length ; i++)
+        {
+
+        }*/
         if ( card_type.equals("text_text"))
         {
             intent.putExtra("front", front.getText().toString());
@@ -281,12 +292,36 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
     }
 
 
-    private void createOrUpdateCard(DBCard card,DBDeck deck , String back , String front , String card_type, Date date_created){
+    private void createOrUpdateCard(DBCard card,DBDeck deck ,String version , String layoutType , List<String> values , List<String> types){
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(0);
+        /*Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(0);*/
 
-        if (card_type.equals("text_text")) {
+        int cardContentSize = values.size();
+        int questionSize = Integer.parseInt(layoutType.split("_")[0]);
+        int answerSize = Integer.parseInt(layoutType.split("_")[1]);
+
+        for ( int i = 0 ; i < questionSize ; i++)
+        {
+            if(types.get(i) != "text");
+            {
+                values.set(i,front_path);
+            }
+
+        }
+
+        for ( int i = 0 ; i < answerSize ; i++)
+        {
+            if(types.get(i+questionSize) != "text");
+            {
+                values.set(i,back_path);
+            }
+
+        }
+
+
+
+        /*if (card_type.equals("text_text")) {
             card.setQuestion(front);
             card.setAnswer(back);
         } else if (card_type.equals("image_text")) {
@@ -316,28 +351,18 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
         else if (card_type.equals("audio_audio")) {
             card.setQuestion(front_path);
             card.setAnswer(back_path);
-        }
+        }*/
         card.setDeckId(deck.getId());
         // difficulty is type "frontType_backType"
-        card.setDifficulty(card_type);
-        card.setDate_creted(date_created);
-        card.setLast_study(calendar.getTime());
-        card.setCurrent_level(0.0);
-        card.setVolatility(1.0);
-        card.setTimes_studied(0);
+        card.setLayoutType(layoutType);
+        //card.setDate_creted(date_created);
+        CardContentListFactory.create(card, version, values, types);
+
 
         databaseManager.insertOrUpdateCard(card);
 
     }
 
-    private void updateDeck(DBDeck deck){
-
-        deck.setNumber_of_cards(deck.getNumber_of_cards() + 1);
-
-        deck.setTotal_new_cards(deck.getTotal_new_cards() + 1);
-        databaseManager.insertOrUpdateDeck(deck);
-
-    }
 
     public void onEventMainThread(ImagePathBUS event) {
         multimedia_path = event.getPath();
@@ -403,10 +428,11 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
                 accept_state = "Create";
             }
             if(extras.getLong("card_id") != 0){
-                card_id = extras.getLong("card_id");
+                /*card_id = extras.getLong("card_id");
                 getSupportActionBar().setTitle("Edit Card");
                 accept_state = "Update";
                 DBCard card = databaseManager.getCardById(card_id);
+
                 card_type = card.getDifficulty();
 
                 CardTypesPlaceholderUtils type = new CardTypesPlaceholderUtils(card.getDifficulty());;
@@ -457,7 +483,7 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
                     textView.setText("Audio");
                     back_path = card.getAnswer();
                 }
-                deck = databaseManager.getDeckById(databaseManager.getCardById(card_id).getDeckId()).getName();
+                deck = databaseManager.getDeckById(databaseManager.getCardById(card_id).getDeckId()).getName();*/
             }
             index = deck_names.indexOf(deck);
 
@@ -518,15 +544,35 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
                         else {
                             if (accept_state.equals("Create")) {
 
-                                if (back != null) {
-                                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    imm.hideSoftInputFromWindow(back.getWindowToken(), 0);
-                                }
-                                DBDeck db_deck = databaseManager.getDeckById(deckIds.get(index));
-                                DBCard db_card = new DBCard();
+                                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(back.getWindowToken(), 0);
 
-                                createOrUpdateCard(db_card, db_deck, back.getText().toString(), front.getText().toString(), card_type, date);
-                                updateDeck(db_deck);
+                                DBDeck dbDeck = databaseManager.getDeckById(deckIds.get(index));
+                                DBUserDeck dbUserDeck = databaseManager.getUserDeckByDeckId(deckIds.get(index));
+                                DBCard dbCard = new DBCard();
+
+                                List<String> values = new ArrayList<String>();
+                                values.add(front.getText().toString());
+                                values.add(back.getText().toString());
+
+                                List<String> types = new ArrayList<String>();
+                                values.add(card_type.split("_")[0]);
+                                values.add(card_type.split("_")[1]);
+
+                               /* Calendar calendar = Calendar.getInstance();
+                                calendar.setTimeInMillis(0)*/;
+
+                                DBCardProgress cardProgress = new DBCardProgress();
+                                cardProgress.setId(dbCard.getId());
+                                cardProgress.setLastStudyDate(new Date().getTime());
+                                cardProgress.setLevel(0.0);
+                                cardProgress.setVolatility(1.0);
+                                cardProgress.setVersion("0");
+                                databaseManager.insertCardProgress(cardProgress);
+
+
+                                createOrUpdateCard(dbCard,dbDeck,cardProgress.getVersion(),"1_1", values, types);
+                                databaseManager.insertOrUpdateDeck(dbDeck);
 
                                 Toast.makeText(getApplicationContext(), "Card created", Toast.LENGTH_SHORT).show();
 
@@ -544,12 +590,20 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
                                 if (db_deck.getId() != old_deck.getId()) {
 
                                     databaseManager.deleteCardById(card_id);
-                                    old_deck.setNumber_of_cards(old_deck.getNumber_of_cards() - 1);
-                                    old_deck.setTotal_new_cards(old_deck.getTotal_new_cards() - 1);
                                     databaseManager.insertOrUpdateDeck(old_deck);
                                 }
 
-                                createOrUpdateCard(card, db_deck, back.getText().toString(), front.getText().toString(), card_type, date);
+                                List<String> values = new ArrayList<String>();
+
+                                List<String> types = new ArrayList<String>();
+
+                                for ( int i = 0 ; i < card.getCardContents().size() ; i++ )
+                                {
+                                    values.add(card.getCardContents().get(i).getValue());
+                                    types.add(card.getCardContents().get(i).getType());
+                                }
+
+                                createOrUpdateCard(card, db_deck,databaseManager.getCardProgressById(card.getId()).getVersion() ,"1_1", values, types);
                                 databaseManager.insertOrUpdateDeck(db_deck);
 
 

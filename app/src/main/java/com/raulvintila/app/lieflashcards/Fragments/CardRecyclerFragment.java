@@ -289,8 +289,8 @@ public class CardRecyclerFragment extends Fragment implements SearchView.OnQuery
 
         final List<DBCard> filteredModelList = new ArrayList<>();
         for (DBCard card_item : card_items) {
-            final String question = card_item.getQuestion().toLowerCase();
-            final String answer = card_item.getAnswer().toLowerCase();
+            final String question = card_item.getCardContents().get(0).getValue().toLowerCase();//getQuestion().toLowerCase();
+            final String answer = card_item.getCardContents().get(1).getValue().toLowerCase();//getAnswer().toLowerCase();
             if (question.contains(query) || answer.contains(query)) {
                 filteredModelList.add(card_item);
             }
@@ -320,9 +320,6 @@ public class CardRecyclerFragment extends Fragment implements SearchView.OnQuery
 
                                 databaseManager.deleteCardById(item.getId());
                                 DBDeck deck = databaseManager.getDeckById(item.getDeckId());
-                                deck.setNumber_of_cards(deck.getNumber_of_cards() - 1);
-
-                                deck.setTotal_new_cards(deck.getTotal_new_cards() - 1);
                                 databaseManager.insertOrUpdateDeck(deck);
                                 adapter.notifyDataSetChanged();
 

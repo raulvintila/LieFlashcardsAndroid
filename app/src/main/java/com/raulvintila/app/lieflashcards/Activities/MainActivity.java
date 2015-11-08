@@ -40,6 +40,7 @@ import com.raulvintila.app.lieflashcards.AsyncSynchronize;
 import com.raulvintila.app.lieflashcards.Communication.CustomModel;
 import com.raulvintila.app.lieflashcards.Communication.TaskHelper;
 import com.raulvintila.app.lieflashcards.Communication.UserId;
+import com.raulvintila.app.lieflashcards.Database.dao.DBUserDeck;
 import com.raulvintila.app.lieflashcards.MyApplication;
 import com.raulvintila.app.lieflashcards.RecyclerItems.DeckRecyclerViewItem;
 import com.raulvintila.app.lieflashcards.R;
@@ -174,14 +175,19 @@ public class MainActivity extends AppCompatActivity {
                             public void onInput(MaterialDialog dialog, CharSequence input) {
 
                                 DBDeck deck = new DBDeck();
+
+                                DBUserDeck userDeck = new DBUserDeck();
+                                //userDeck.setDeckId(deck.getId());
+
                                 deck.setName(input.toString());
-                                deck.setNumber_of_cards_per_day(20);
-                                deck.setNumber_of_cards(0);
-                                deck.setTotal_new_cards(new Long(0));
-                                deck.setDate_created(new Date());
+                                deck.setIcon(R.drawable.dog);
+                                userDeck.setCardsPerDay(20);
+                                deck.setDateCreated(new Date().getTime());
 
                                 deck = databaseManager.insertDeck(deck);
-                                data.add(0, new DeckRecyclerViewItem(0, input.toString(), "20 / 25 / 122", R.drawable.dog, "0m", new Integer[]{0}, 20, deck.getId()));
+                                databaseManager.insertUserDeck(userDeck);
+                                data.add(0, new DeckRecyclerViewItem(0, input.toString(), "20 / 25 / 122", R.drawable.dog, "0m", 20, deck.getId()));
+
 
                                 CustomModel.getInstance().getAdapter().notifyDataSetChanged();
                             }

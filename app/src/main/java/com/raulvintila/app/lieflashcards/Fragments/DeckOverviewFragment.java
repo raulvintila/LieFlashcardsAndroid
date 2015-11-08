@@ -73,26 +73,6 @@ public class DeckOverviewFragment extends Fragment {
         Fragment fragment = new PlayModesFragment();
         android.support.v4.app.FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.add(R.id.play_mode_fragment_container, fragment).commit();
-
-        //databaseManager = ((MyApplication)getActivity().getApplicationContext()).databaseManager;
-        DBDeck deck = databaseManager.getDeckById(CustomModel.getInstance().getDeckId());
-
-        TextView deck_main_mode = (TextView) view.findViewById(R.id.deck_main_mode);
-        TextView deck_sub_mode = (TextView) view.findViewById(R.id.deck_sub_mode);
-
-        deck_main_mode.setText(default_main_mode);
-        deck_sub_mode.setText(default_sub_mode);
-
-        TextView deck_total_new_cards = (TextView)view.findViewById(R.id.total_new_cards_stats);
-        deck_total_new_cards.setText(""+deck.getTotal_new_cards());
-
-        TextView deck_total_cards = (TextView)view.findViewById(R.id.total_cards_stats);
-        deck_total_cards.setText(""+deck.getNumber_of_cards());
-
-        TextView deck_due_today_stats = (TextView) view.findViewById(R.id.due_today_stats);
-        String deck_cards_per_day = ""+deck.getNumber_of_cards_per_day();
-        String text = "<font color=#1976D2>"+deck_cards_per_day+"</font> <font color=#008800> 2</font> <font color=#bb0000> 6</font>";
-        deck_due_today_stats.setText(Html.fromHtml(text));
         //deck_cards_per_day.setText(""+deck.getNumber_of_cards_per_day()+ " 2 6");
         return view;
     }

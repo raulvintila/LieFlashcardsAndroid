@@ -63,21 +63,21 @@ public class AsyncSynchronize extends AsyncTask<Void, Void, Void> {
 
 
             if(PUSH_ACTION) {
-                    /* Deletes decks on the server */
+               /*     *//* Deletes decks on the server *//*
                 doWork.deleteRemoteDecks(remote_decks, local_decks, user_id);
 
                 for(int k = 0; k < local_decks.size(); k++) {
                     DBDeck deck = local_decks.get(k);
-                        /* This deck was never stored in the remote DB */
+                        *//* This deck was never stored in the remote DB *//*
                     if (local_decks.get(k).getRemoteId() == null) {
 
-                            /* Inserting the new deck in the server */
+                            *//* Inserting the new deck in the server *//*
                         deck = doWork.createRemoteDeck(deck);
 
-                            /* Linking the deck with the user*/
+                            *//* Linking the deck with the user*//*
                         doWork.linkDeckToUser(deck, user_id);
 
-                            /* Inserting all the cards related to this deck in the server */
+                            *//* Inserting all the cards related to this deck in the server *//*
                         List<DBCard> card_list = databaseManager.getCardsByDeckId(local_decks.get(k).getId());
                         for (int j = 0; j < card_list.size(); j++) {
                             DBCard card = card_list.get(j);
@@ -85,28 +85,28 @@ public class AsyncSynchronize extends AsyncTask<Void, Void, Void> {
                             doWork.createRemoteCard(card, deck);
                         }
 
-                            /* Because the deck was new, there were no cards to update */
+                            *//* Because the deck was new, there were no cards to update *//*
                     }
-                        /* This deck is already in the remote DB, we are looking for possible updates */
+                        *//* This deck is already in the remote DB, we are looking for possible updates *//*
                     else {
 
-                            /* Update the deck on the server */
+                            *//* Update the deck on the server *//*
                         deck = doWork.updateRemoteDeck(deck);
 
                         List<DBCard> local_cards = databaseManager.getCardsByDeckId(local_decks.get(k).getId());
                         List<Card> remote_cards = user_data.getDeckbyId(deck.getRemoteId()).getDeck_cards();
 
-                            /* Deletes Deck cards on the server */
+                            *//* Deletes Deck cards on the server *//*
                         doWork.deleteRemoteCards(local_cards, remote_cards);
 
 
                         for (int i = 0; i<local_cards.size();i++) {
                             DBCard card = local_cards.get(i);
                             if (local_cards.get(i).getRemoteId() == null) {
-                                    /* Inserting the new card on the server */
+                                    *//* Inserting the new card on the server *//*
                                 doWork.createRemoteCard(card, deck);
                             }
-                                /* This card is already in the remote DB, we are looking for possible updates */
+                                *//* This card is already in the remote DB, we are looking for possible updates *//*
                             else {
                                 doWork.updateRemoteCard(card);
                             }
@@ -114,7 +114,7 @@ public class AsyncSynchronize extends AsyncTask<Void, Void, Void> {
                     }
 
 
-                }
+                }*/
 
             } else if (PULL_ACTION) { }
             return null;

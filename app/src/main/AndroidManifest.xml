@@ -104,14 +104,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.raulvintila.app.lieflashcards.Activities.DeckActivity" />
         </activity>
-        <activity
-            android:name=".Activities.DeckSettingsActivity"
-            android:label="@string/title_activity_deck_settings"
-            android:parentActivityName=".Activities.DeckActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.raulvintila.app.lieflashcards.Activities.DeckActivity" />
-        </activity>
     </application>
 
 </manifest>

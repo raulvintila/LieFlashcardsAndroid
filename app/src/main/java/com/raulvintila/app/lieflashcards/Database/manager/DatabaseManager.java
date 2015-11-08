@@ -6,11 +6,17 @@ import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.raulvintila.app.lieflashcards.Database.dao.DBCard;
+import com.raulvintila.app.lieflashcards.Database.dao.DBCardContent;
+import com.raulvintila.app.lieflashcards.Database.dao.DBCardContentDao;
 import com.raulvintila.app.lieflashcards.Database.dao.DBCardDao;
+import com.raulvintila.app.lieflashcards.Database.dao.DBCardProgress;
+import com.raulvintila.app.lieflashcards.Database.dao.DBCardProgressDao;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeckDao;
 import com.raulvintila.app.lieflashcards.Database.dao.DBUser;
 import com.raulvintila.app.lieflashcards.Database.dao.DBUserDao;
+import com.raulvintila.app.lieflashcards.Database.dao.DBUserDeck;
+import com.raulvintila.app.lieflashcards.Database.dao.DBUserDeckDao;
 import com.raulvintila.app.lieflashcards.Database.dao.DaoMaster;
 import com.raulvintila.app.lieflashcards.Database.dao.DaoSession;
 
@@ -167,6 +173,21 @@ public class DatabaseManager implements IDatabaseManager, AsyncOperationListener
         return deck;
     }
 
+    @Override
+    public synchronized DBUserDeck insertOrUpdateUserDeck(DBUserDeck userDeck) {
+        try {
+            if (userDeck != null) {
+                openWritableDb();
+                daoSession.insertOrReplace(userDeck);
+                //Log.d(TAG, "Inserted card: question: " + card.getQuestion() + ", asnwer :" + card.getAnswer() + " to the schema.");
+                daoSession.clear();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userDeck;
+    }
+
 
     @Override
     public synchronized DBCard insertOrUpdateCard(DBCard card) {
@@ -184,13 +205,43 @@ public class DatabaseManager implements IDatabaseManager, AsyncOperationListener
     }
 
     @Override
+    public synchronized DBCardProgress insertOrUpdateCardProgress(DBCardProgress cardProgress) {
+        try {
+            if (cardProgress != null) {
+                openWritableDb();
+                daoSession.insertOrReplace(cardProgress);
+                //Log.d(TAG, "Inserted card: question: " + card.getQuestion() + ", asnwer :" + card.getAnswer() + " to the schema.");
+                daoSession.clear();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cardProgress;
+    }
+
+    @Override
+    public synchronized DBCardContent insertOrUpdateCardContent(DBCardContent cardContent) {
+        try {
+            if (cardContent != null) {
+                openWritableDb();
+                daoSession.insertOrReplace(cardContent);
+                //Log.d(TAG, "Inserted card: question: " + card.getQuestion() + ", asnwer :" + card.getAnswer() + " to the schema.");
+                daoSession.clear();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cardContent;
+    }
+
+    @Override
     public synchronized DBCard insertCard(DBCard card) {
         try {
             if (card != null) {
                 openWritableDb();
                 DBCardDao cardDao = daoSession.getDBCardDao();
                 cardDao.insert(card);
-                Log.d(TAG, "Inserted card: question: " + card.getQuestion() + ", asnwer :" + card.getAnswer() + " to the schema.");
+               // Log.d(TAG, "Inserted card: question: " + card.getQuestion() + ", asnwer :" + card.getAnswer() + " to the schema.");
                 daoSession.clear();
             }
         } catch (Exception e) {
@@ -198,6 +249,23 @@ public class DatabaseManager implements IDatabaseManager, AsyncOperationListener
         }
         return card;
     }
+
+    @Override
+    public synchronized DBCardProgress insertCardProgress(DBCardProgress cardProgress) {
+        try {
+            if (cardProgress != null) {
+                openWritableDb();
+                DBCardProgressDao cardProgressDao = daoSession.getDBCardProgressDao();
+                cardProgressDao.insert(cardProgress);
+                // Log.d(TAG, "Inserted card: question: " + card.getQuestion() + ", asnwer :" + card.getAnswer() + " to the schema.");
+                daoSession.clear();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cardProgress;
+    }
+
 
     @Override
     public synchronized DBDeck insertDeck(DBDeck deck) {
@@ -213,6 +281,22 @@ public class DatabaseManager implements IDatabaseManager, AsyncOperationListener
             e.printStackTrace();
         }
         return deck;
+    }
+
+    @Override
+    public synchronized DBUserDeck insertUserDeck(DBUserDeck userDeck) {
+        try {
+            if ( userDeck != null) {
+                openWritableDb();
+                DBUserDeckDao userDeckDao = daoSession.getDBUserDeckDao();
+                userDeckDao.insert(userDeck);
+                Log.d(TAG, "Inserted userDeck to the schema.");
+                daoSession.clear();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userDeck;
     }
 
     @Override
@@ -356,6 +440,20 @@ public class DatabaseManager implements IDatabaseManager, AsyncOperationListener
     }
 
     @Override
+    public synchronized DBUserDeck getUserDeckByDeckId(Long deckId) {
+        DBUserDeck userDeck = null;
+        try {
+            openReadableDb();
+            DBUserDeckDao userDeckDao = daoSession.getDBUserDeckDao();
+            userDeck = userDeckDao.queryBuilder().where(DBUserDeckDao.Properties.DeckId.eq(deckId)).unique();
+            daoSession.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userDeck;
+    }
+
+    @Override
     public synchronized DBCard getCardById(Long card_id) {
         DBCard card = null;
         try {
@@ -367,6 +465,34 @@ public class DatabaseManager implements IDatabaseManager, AsyncOperationListener
             e.printStackTrace();
         }
         return card;
+    }
+
+    @Override
+    public synchronized DBCardProgress getCardProgressById(Long card_id) {
+        DBCardProgress cardProgress = null;
+        try {
+            openReadableDb();
+            DBCardProgressDao cardProgressDao = daoSession.getDBCardProgressDao();
+            cardProgress = cardProgressDao.queryBuilder().where(DBCardProgressDao.Properties.Id.eq(card_id)).unique();
+            daoSession.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cardProgress;
+    }
+
+    @Override
+    public synchronized DBCardContent getCardContentByCardId(Long card_id) {
+        DBCardContent cardContent = null;
+        try {
+            openReadableDb();
+            DBCardContentDao cardContentDao = daoSession.getDBCardContentDao();
+            cardContent = cardContentDao.queryBuilder().where(DBCardContentDao.Properties.CardId.eq(card_id)).unique();
+            daoSession.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cardContent;
     }
 
     @Override

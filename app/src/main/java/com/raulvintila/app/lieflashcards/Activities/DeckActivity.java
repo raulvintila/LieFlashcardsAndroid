@@ -22,6 +22,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.raulvintila.app.lieflashcards.Communication.CustomModel;
 import com.raulvintila.app.lieflashcards.Database.dao.DBCard;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
+import com.raulvintila.app.lieflashcards.Database.dao.DBUserDeck;
 import com.raulvintila.app.lieflashcards.Database.manager.IDatabaseManager;
 import com.raulvintila.app.lieflashcards.MyApplication;
 import com.raulvintila.app.lieflashcards.RecyclerItems.DeckRecyclerViewItem;
@@ -43,7 +44,6 @@ public class DeckActivity extends AppCompatActivity {
     private DeckRecyclerViewItem deckRecyclerViewItem;
     private String deck_name;
     //DBDeck deck;
-    private Integer[] hints_used;
 
     @Override
     public void onRestart() {
@@ -56,7 +56,9 @@ public class DeckActivity extends AppCompatActivity {
 
     private void showMeDialog(int which)
     {
-        final DBDeck deck = databaseManager.getDeckById(CustomModel.getInstance().getDeckId());
+        Long deck_id = CustomModel.getInstance().getDeckId();
+        final DBDeck deck = databaseManager.getDeckById(deck_id);
+        final DBUserDeck userDeck = databaseManager.getUserDeckByDeckId(deck_id);
         switch (which)
         {
             case 0:
@@ -97,11 +99,11 @@ public class DeckActivity extends AppCompatActivity {
                     .title("Cards per day")
                             //.content("Current number of cards: " + 20)
                     .inputType(InputType.TYPE_CLASS_NUMBER)
-                    .input("Curent number of cards " + deck.getNumber_of_cards_per_day(), "", false, new MaterialDialog.InputCallback() {
+                    .input("Curent number of cards " + deck, "", false, new MaterialDialog.InputCallback() {
                         @Override
                         public void onInput(MaterialDialog dialog, CharSequence input) {
-                            deck.setNumber_of_cards_per_day(Integer.parseInt(input.toString()));
-                            databaseManager.insertOrUpdateDeck(deck);
+                            userDeck.setCardsPerDay(Integer.parseInt(input.toString()));
+                            databaseManager.insertOrUpdateUserDeck(userDeck);
                             deckRecyclerViewItem.setCards(Integer.parseInt(input.toString()) + " / 25 / 122");
                             CustomModel.getInstance().getAdapter().notifyDataSetChanged();
                         }
@@ -114,7 +116,7 @@ public class DeckActivity extends AppCompatActivity {
                 new MaterialDialog.Builder(this)
                     .title("Hints")
                     .items(R.array.hints)
-                    .itemsCallbackMultiChoice(hints_used, new MaterialDialog.ListCallbackMultiChoice() {
+                    .itemsCallbackMultiChoice(new Integer[]{0}, new MaterialDialog.ListCallbackMultiChoice() {
                         @Override
                         public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                             /**
@@ -122,9 +124,6 @@ public class DeckActivity extends AppCompatActivity {
                              * returning false here won't allow the newly selected check box to actually be selected.
                              * See the limited multi choice dialog example in the sample project for details.
                              **/
-                            hints_used = which;
-                            deckRecyclerViewItem.setHints_used(which);
-                            CustomModel.getInstance().getAdapter().notifyDataSetChanged();
                             return true;
                         }
                     })
@@ -169,7 +168,7 @@ public class DeckActivity extends AppCompatActivity {
     public void onClick(View v){
         switch (v.getId()) {
             case R.id.play:
-                if (new SpacedLearningAlgoUtils().getTodayList(databaseManager.getDeckById(deckRecyclerViewItem.getDeckId()).getCards(), (int)databaseManager.getDeckById(deckRecyclerViewItem.getDeckId()).getNumber_of_cards_per_day()).size() > 0) {
+                if (new SpacedLearningAlgoUtils().getTodayList(databaseManager.getDeckById(deckRecyclerViewItem.getDeckId()).getCards(), databaseManager.getUserDeckByDeckId(deckRecyclerViewItem.getDeckId()).getCardsPerDay()).size() > 0) {
                     final Intent intent = new Intent(this, PlayDeckActivity.class);
                     intent.putExtra("is_preview", false);
                     startActivity(intent);
@@ -217,20 +216,16 @@ public class DeckActivity extends AppCompatActivity {
 
         data = CustomModel.getInstance().getList();
         deckRecyclerViewItem = CustomModel.getInstance().getDeckRecyclerViewItem();
-        deck_name = deckRecyclerViewItem.getName();
-        hints_used = deckRecyclerViewItem.getHints_used();
+        deck_name = deckRecyclerViewItem.getName();;
 
         DBDeck deck = databaseManager.getDeckById(CustomModel.getInstance().getDeckId());
-
-
-        TextView deck_total_new_cards = (TextView)findViewById(R.id.total_new_cards_stats);
-        deck_total_new_cards.setText(""+deck.getTotal_new_cards());
+        DBUserDeck userDeck = databaseManager.getUserDeckByDeckId(CustomModel.getInstance().getDeckId());
 
         TextView deck_total_cards = (TextView)findViewById(R.id.total_cards_stats);
-        deck_total_cards.setText(""+deck.getNumber_of_cards());
+        deck_total_cards.setText(""+deck.getCards().size());
 
         TextView deck_due_today_stats = (TextView) findViewById(R.id.due_today_stats);
-        String deck_cards_per_day = ""+deck.getNumber_of_cards_per_day();
+        String deck_cards_per_day = ""+userDeck.getCardsPerDay();
         String text = "<font color=#1976D2>"+deck_cards_per_day+"</font> <font color=#008800> 2</font> <font color=#bb0000> 6</font>";
         deck_due_today_stats.setText(Html.fromHtml(text));
 

@@ -311,13 +311,13 @@ public class NetworkUtils {
             httpCon.setRequestProperty("Accept", "application/json");
             httpCon.setUseCaches(false);
 
-            String[] types = card.getDifficulty().split("_");
+            //String[] types = card.getDifficulty().split("_");
 
             JSONObject jsonParam = new JSONObject();
-            jsonParam.put("card_question", card.getQuestion());
-            jsonParam.put("card_answer", card.getAnswer());
-            jsonParam.put("card_question_type", types[0]);
-            jsonParam.put("card_answer_type", types[1]);
+            jsonParam.put("card_question", card.getCardContents().get(0).getValue());//getQuestion());
+            jsonParam.put("card_answer", card.getCardContents().get(1).getValue());
+            jsonParam.put("card_question_type", card.getCardContents().get(0).getType());
+            jsonParam.put("card_answer_type", card.getCardContents().get(1).getType());
             jsonParam.put("deck_id", remote_deck_id);
 
             OutputStream printout = new DataOutputStream(httpCon.getOutputStream());
@@ -361,8 +361,8 @@ public class NetworkUtils {
             httpCon.setUseCaches(false);
 
             JSONObject jsonParam = new JSONObject();
-            jsonParam.put("card_question", card.getQuestion());
-            jsonParam.put("card_answer", card.getAnswer());
+            jsonParam.put("card_question", card.getCardContents().get(0).getValue());
+            jsonParam.put("card_answer", card.getCardContents().get(1).getValue());
             jsonParam.put("card_id", card.getRemoteId());
 
             OutputStream printout = new DataOutputStream(httpCon.getOutputStream());

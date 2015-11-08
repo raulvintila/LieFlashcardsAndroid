@@ -39,17 +39,18 @@ public class SyncWorker {
 
     public DBDeck createRemoteDeck(DBDeck deck) {
 
-        /* Inserting the deck in the server */
+        /* Inserting the deck in the server *//*
         WrappedDeckRRM wDeckRRM = new NetworkUtils().createRemoteDeck(deck);
 
         DBDeck updated_deck = wDeckRRM.getDeck();
         String remote_deck_id = wDeckRRM.getRrm().getPayload().getDeck_id();
 
-        /* Updating the local deck with the remoteId */
+        *//* Updating the local deck with the remoteId *//*
         updated_deck.setRemoteId(remote_deck_id);
         databaseManager.insertOrUpdateDeck(updated_deck);
 
-        return updated_deck;
+        return updated_deck;*/
+        return deck;
     }
 
     public void linkDeckToUser(DBDeck deck, String user_id) {
@@ -58,17 +59,17 @@ public class SyncWorker {
 
     public void createRemoteCard(DBCard card, DBDeck deck) {
 
-        /* Wrapping the card & deck_remote_id because the AsyncTask can take parameters of only one type */
+        /* Wrapping the card & deck_remote_id because the AsyncTask can take parameters of only one type *//*
         CreateCardWrapper wrapper = new CreateCardWrapper(card, deck.getRemoteId());
-        /* Inserting the card in the server */
+        *//* Inserting the card in the server *//*
         WrappedCardRRM wCardRRM = new NetworkUtils().createRemoteCard(wrapper);
 
         DBCard created_card = wCardRRM.getCard();
         String remote_card_id = wCardRRM.getRrm().getPayload().getCard_id();
 
-        /* Updating the local card with the remoteId */
+        *//* Updating the local card with the remoteId *//*
         created_card.setRemoteId(remote_card_id);
-        databaseManager.insertOrUpdateCard(wCardRRM.getCard());
+        databaseManager.insertOrUpdateCard(wCardRRM.getCard());*/
     }
 
     public DBDeck updateRemoteDeck(DBDeck deck) {

@@ -2,6 +2,7 @@ package com.raulvintila.app.lieflashcards.Utils.Algorithms;
 
 
 import com.raulvintila.app.lieflashcards.Database.dao.DBCard;
+import com.raulvintila.app.lieflashcards.Database.dao.DBCardProgress;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,11 +30,12 @@ public class SpacedLearningAlgoUtils {
 
 
         DBCard card, tmp_card;
+        DBCardProgress cardProgress;
 
         // Find all the ready_to_study_cards and place them in the right bucket
 
         for (int i = 0; i < whole_list.size(); i++) {
-            card = whole_list.get(i);
+           /* card = whole_list.get(i);
             if(readyToStudy(card)) {
                 if (card.getCurrent_level() <= 1.5)
                     rank1.add(card);
@@ -45,7 +47,7 @@ public class SpacedLearningAlgoUtils {
                     rank4.add(card);
                 else
                     rank5.add(card);
-            }
+            }*/
         }
 
         // Sort the cards accordingly with their priority
@@ -156,7 +158,7 @@ public class SpacedLearningAlgoUtils {
         double second_card_days;
         long first_card_priority;
         long second_card_priority;
-        double first_card_level = first_card.getCurrent_level();
+       /* double first_card_level = first_card.getCurrent_level();
         double second_card_level = second_card.getCurrent_level();
 
         if (first_card_level <= 1)
@@ -194,12 +196,12 @@ public class SpacedLearningAlgoUtils {
         second_card_priority = second_card.getLast_study().getTime() + (long)(second_card_days * ( 24 * 60 * 60 * 1000));
 
         if (first_card_priority - second_card_priority > 0)
-            return true;
+            return true;*/
         return false;
     }
 
     public boolean readyToStudy(DBCard card) {
-        double days;
+       /* double days;
         double level = card.getCurrent_level();
         Calendar today = Calendar.getInstance();
 
@@ -220,12 +222,12 @@ public class SpacedLearningAlgoUtils {
 
         if (today.getTimeInMillis() - (card.getLast_study().getTime() + days * ( 24 * 60 * 60 * 1000)) >=  -1 * ( 24 * 60 * 60 * 1000))
             return true;
-
+*/
         return false;
     }
 
     public boolean readyToRestudy(DBCard card) {
-        double days;
+       /* double days;
         double level = card.getCurrent_level();
         Calendar today = Calendar.getInstance();
 
@@ -247,13 +249,13 @@ public class SpacedLearningAlgoUtils {
         double diff = today.getTimeInMillis() - (card.getLast_study().getTime() + days * ( 24 * 60 * 60 * 1000));
 
         if (diff <= ( 24 * 60 * 60 * 1000) && diff >= -( 24 * 60 * 60 * 1000)  )
-            return true;
+            return true;*/
 
         return false;
     }
 
     public double updateLevel(double level, int choice, double volatility, int nr_repeats) {
-        switch (choice) {
+      /*  switch (choice) {
             case 0:
                 double d = getLevel(level, volatility);
                 return d;
@@ -264,7 +266,7 @@ public class SpacedLearningAlgoUtils {
                     return level + 1;
             case 2:
                 return level + 2 * repeatModifier(nr_repeats);
-        }
+        }*/
         return level;
     }
 

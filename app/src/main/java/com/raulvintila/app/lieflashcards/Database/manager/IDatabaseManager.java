@@ -1,8 +1,11 @@
 package com.raulvintila.app.lieflashcards.Database.manager;
 
 import com.raulvintila.app.lieflashcards.Database.dao.DBCard;
+import com.raulvintila.app.lieflashcards.Database.dao.DBCardContent;
+import com.raulvintila.app.lieflashcards.Database.dao.DBCardProgress;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
 import com.raulvintila.app.lieflashcards.Database.dao.DBUser;
+import com.raulvintila.app.lieflashcards.Database.dao.DBUserDeck;
 
 import java.util.List;
 
@@ -26,12 +29,25 @@ public interface IDatabaseManager {
 
     public DBDeck getDeckById(Long deckId);
 
+    public DBUserDeck getUserDeckByDeckId(Long deckId);
+
     public List<DBDeck> getAllDecks();
 
     public void deleteDecks();
 
     public DBDeck insertDeck(DBDeck deck);
+
+    public DBUserDeck insertUserDeck(DBUserDeck userDeck);
+
+    public DBCardProgress insertCardProgress(DBCardProgress cardProgress);
+
     public DBCard getCardById(Long card_id);
+
+    public DBCardProgress getCardProgressById(Long card_id);
+
+    public DBCardContent insertOrUpdateCardContent(DBCardContent cardContent);
+
+    public DBCardProgress insertOrUpdateCardProgress(DBCardProgress cardProgress);
 
     /**
      * Insert a user into the DB
@@ -46,11 +62,15 @@ public interface IDatabaseManager {
 
     public DBDeck insertOrUpdateDeck(DBDeck deck);
 
+    public DBUserDeck insertOrUpdateUserDeck(DBUserDeck userDeck);
+
     public boolean deleteDeckById(Long deckId);
 
     public boolean deleteCardById(Long cardId);
 
     public DBCard insertCard(DBCard card);
+
+    public DBCardContent getCardContentByCardId(Long card_id);
 
     public List<DBCard> getCardsByDeckId(Long deckId);
 

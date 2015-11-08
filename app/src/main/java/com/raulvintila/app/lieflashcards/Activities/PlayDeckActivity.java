@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.raulvintila.app.lieflashcards.Communication.CustomModel;
 import com.raulvintila.app.lieflashcards.Database.dao.DBCard;
+import com.raulvintila.app.lieflashcards.Database.dao.DBCardContent;
+import com.raulvintila.app.lieflashcards.Database.dao.DBCardProgress;
 import com.raulvintila.app.lieflashcards.Database.dao.DBDeck;
 import com.raulvintila.app.lieflashcards.Database.manager.IDatabaseManager;
 import com.raulvintila.app.lieflashcards.DrawingView;
@@ -26,6 +28,7 @@ import com.raulvintila.app.lieflashcards.R;
 import com.raulvintila.app.lieflashcards.SetImageTask;
 import com.raulvintila.app.lieflashcards.Utils.Algorithms.SpacedLearningAlgoUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -47,7 +50,14 @@ public class PlayDeckActivity extends ActionBarActivity {
     private boolean preview;
 
     private void showCardFace(String type ) {
-        String[] types = card_list.get(0).getDifficulty().split("_");
+        //String[] types = card_list.get(0).getDifficulty().split("_");
+        List<String> types = new ArrayList<>();
+        List<String> values = new ArrayList<>();
+        for( int i = 0 ; i < card_list.get(0).getCardContents().size(); i++)
+        {
+            values.add(card_list.get(0).getCardContents().get(i).getValue());
+            types.add(card_list.get(0).getCardContents().get(i).getType());
+        }
 
         TextView text_view_back = (TextView) findViewById(R.id.back_text);
         ImageView image_view_back = (ImageView) findViewById(R.id.back_image);
@@ -62,50 +72,54 @@ public class PlayDeckActivity extends ActionBarActivity {
             image_view_back.setVisibility(View.GONE);
             audio_view_back.setVisibility(View.GONE);
 
-            if (types[0].equals("text")) {
-                text_to_speech.speak(card_list.get(0).getQuestion(), TextToSpeech.QUEUE_FLUSH, null);
+            if (types.get(0).equals("text")) {
+                //text_to_speech.speak(card_list.get(0).getQuestion(), TextToSpeech.QUEUE_FLUSH, null);
+                text_to_speech.speak(values.get(0), TextToSpeech.QUEUE_FLUSH, null);
                 text_view.setVisibility(View.VISIBLE);
-                text_view.setText(card_list.get(0).getQuestion());
+                /*text_view.setText(card_list.get(0).getQuestion());*/
+                text_view.setText(values.get(0));
                 image_view.setVisibility(View.GONE);
                 audio_view.setVisibility(View.GONE);
-            } else if (types[0].equals("image")) {
+            } else if (types.get(0).equals("image")) {
 
                 text_view.setVisibility(View.GONE);
                 image_view.setVisibility(View.VISIBLE);
 
-                new SetImageTask(image_view).execute(card_list.get(0).getQuestion());
+                /*new SetImageTask(image_view).execute(card_list.get(0).getQuestion());*/
+                new SetImageTask(image_view).execute(values.get(0));
 
                 audio_view.setVisibility(View.GONE);
-            } else if (types[0].equals("audio")) {
+            } else if (types.get(0).equals("audio")) {
                 text_view.setVisibility(View.GONE);
                 image_view.setVisibility(View.GONE);
                 audio_view.setVisibility(View.VISIBLE);
 
-                playAudio(card_list.get(0).getQuestion());
+                /*playAudio(card_list.get(0).getQuestion());*/
+                playAudio(values.get(0));
 
             }
         } else {
 
-            if (types[1].equals("text")) {
-                text_to_speech.speak(card_list.get(0).getAnswer(), TextToSpeech.QUEUE_FLUSH, null);
+            if (types.get(1).equals("text")) {
+                text_to_speech.speak(values.get(1), TextToSpeech.QUEUE_FLUSH, null);
                 text_view_back.setVisibility(View.VISIBLE);
-                text_view_back.setText(card_list.get(0).getAnswer());
+                text_view_back.setText(values.get(1));
                 image_view_back.setVisibility(View.GONE);
                 audio_view_back.setVisibility(View.GONE);
-            } else if (types[1].equals("image")) {
+            } else if (types.get(1).equals("image")) {
 
                 text_view_back.setVisibility(View.GONE);
                 image_view_back.setVisibility(View.VISIBLE);
 
-                new SetImageTask(image_view_back).execute(card_list.get(0).getAnswer());
+                new SetImageTask(image_view_back).execute(values.get(1));
 
                 audio_view_back.setVisibility(View.GONE);
-            } else if (types[1].equals("audio")) {
+            } else if (types.get(1).equals("audio")) {
                 text_view_back.setVisibility(View.GONE);
                 image_view_back.setVisibility(View.GONE);
                 audio_view_back.setVisibility(View.VISIBLE);
 
-                playAudio(card_list.get(0).getAnswer());
+                playAudio(values.get(1));
             }
 
         }
@@ -183,6 +197,7 @@ public class PlayDeckActivity extends ActionBarActivity {
     public void onClick(View view){
 
         DBCard card;
+        DBCardProgress cardProgress;
 
         switch (view.getId()){
             case R.id.front_audio:
@@ -194,7 +209,7 @@ public class PlayDeckActivity extends ActionBarActivity {
                 else {
                     if ( !preview)
                     {
-                        playAudio(card_list.get(0).getQuestion());
+                        playAudio(card_list.get(0).getCardContents().get(0).getValue());
                     }
 
                 }
@@ -208,7 +223,7 @@ public class PlayDeckActivity extends ActionBarActivity {
                 } else {
                     if ( !preview)
                     {
-                        playAudio(card_list.get(0).getAnswer());
+                        playAudio(card_list.get(0).getCardContents().get(1).getValue());
                     }
                 }
                 return;
@@ -223,15 +238,17 @@ public class PlayDeckActivity extends ActionBarActivity {
 
                 } else {
                     card = card_list.get(0);
-                    double level = card.getCurrent_level();
-                    double volatility = card.getVolatility();
-                    int times = card.getTimes_studied();
+                    cardProgress = databaseManager.getCardProgressById(card.getId());
+                    double level = cardProgress.getLevel();//.getCurrent_level();
+                    double volatility = cardProgress.getVolatility();
+                    int times = cardProgress.getTimesStudied();//.getTimes_studied();
 
-                    card.setLast_study(new Date());
-                    card.setCurrent_level(new SpacedLearningAlgoUtils()
+                    cardProgress.setLastStudyDate(new Date().getTime());//.setLast_study(new Date());
+                    cardProgress.setLevel(new SpacedLearningAlgoUtils()
                             .updateLevel(level, 0, volatility, times));
-                    card.setTimes_studied(times + 1);
-                    databaseManager.insertOrUpdateCard(card);
+                    cardProgress.setTimesStudied(times + 1);//.setTimes_studied(times + 1);
+                    databaseManager.insertOrUpdateCardProgress(cardProgress);
+                   // databaseManager.insertOrUpdateCard(card);
                     shuffleCard();
                     switchToQuestion();
                 }
@@ -241,14 +258,17 @@ public class PlayDeckActivity extends ActionBarActivity {
 
                 } else {
                     card = card_list.get(0);
-                    card.setLast_study(new Date());
-                    card_list.get(0).setVolatility(new SpacedLearningAlgoUtils()
-                            .getVolatility(card_list.get(0).getVolatility(), card_list.get(0).getTimes_studied()));
-                    card_list.get(0).setCurrent_level(new SpacedLearningAlgoUtils()
-                            .updateLevel(card_list.get(0).getCurrent_level(), 1, card_list.get(0).getVolatility(),
-                                    card_list.get(0).getTimes_studied()));
-                    card_list.get(0).setTimes_studied(0);
-                    databaseManager.insertOrUpdateCard(card);
+                    cardProgress = databaseManager.getCardProgressById(card.getId());
+                    cardProgress.setLastStudyDate(new Date().getTime());//.setLast_study(new Date());
+                    cardProgress.setVolatility(new SpacedLearningAlgoUtils()
+                            .getVolatility(cardProgress.getVolatility(), cardProgress.getTimesStudied()));
+                    cardProgress.setLevel(new SpacedLearningAlgoUtils()
+                            .updateLevel(cardProgress.getLevel(), 1, cardProgress.getVolatility(),
+                                    cardProgress.getTimesStudied()));
+                    //card_list.get(0).setTimes_studied(0);
+                    cardProgress.setTimesStudied(0);
+                    databaseManager.insertOrUpdateCardProgress(cardProgress);
+                    //databaseManager.insertOrUpdateCard(card);
                     shuffleCard();
                     switchToQuestion();
                 }
@@ -258,14 +278,15 @@ public class PlayDeckActivity extends ActionBarActivity {
 
                 } else {
                     card = card_list.get(0);
-                    card.setLast_study(new Date());
-                    card_list.get(0).setVolatility(new SpacedLearningAlgoUtils()
-                            .getVolatility(card_list.get(0).getVolatility(), card_list.get(0).getTimes_studied()));
-                    card_list.get(0).setCurrent_level(new SpacedLearningAlgoUtils()
-                            .updateLevel(card_list.get(0).getCurrent_level(), 2, card_list.get(0).getVolatility(),
-                                    card_list.get(0).getTimes_studied()));
-                    card_list.get(0).setTimes_studied(0);
-                    databaseManager.insertOrUpdateCard(card);
+                    cardProgress = databaseManager.getCardProgressById(card.getId());
+                    cardProgress.setLastStudyDate(new Date().getTime());//.setLast_study(new Date());
+                    cardProgress.setVolatility(new SpacedLearningAlgoUtils()
+                            .getVolatility(cardProgress.getVolatility(), cardProgress.getTimesStudied()));
+                    cardProgress.setLevel(new SpacedLearningAlgoUtils()
+                            .updateLevel(cardProgress.getLevel(), 2, cardProgress.getVolatility(),
+                                    cardProgress.getTimesStudied()));
+                    cardProgress.setTimesStudied(0);//.setTimes_studied(0);
+                    databaseManager.insertOrUpdateCardProgress(cardProgress);
                     shuffleCard();
                     switchToQuestion();
                 }
@@ -441,8 +462,8 @@ public class PlayDeckActivity extends ActionBarActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if(card_list.get(0).getDifficulty().split("_")[0].equals("text")) {
-                        text_to_speech.speak(card_list.get(0).getQuestion(), TextToSpeech.QUEUE_FLUSH, null);
+                    if(card_list.get(0).getCardContents().get(0).getType().equals("text")) {
+                        text_to_speech.speak(card_list.get(0).getCardContents().get(0).getValue(), TextToSpeech.QUEUE_FLUSH, null);
                     }
                 }
             }, 125);
@@ -509,9 +530,10 @@ public class PlayDeckActivity extends ActionBarActivity {
     public void switchCardFaces() {
         String aux;
         for (int i = 0; i < card_list.size(); i++) {
-            aux = card_list.get(i).getQuestion();
-            card_list.get(i).setQuestion(card_list.get(i).getAnswer());
-            card_list.get(i).setAnswer(aux);
+            DBCard card = card_list.get(i);
+            aux = card.getCardContents().get(0).getValue();
+            card.getCardContents().get(0).setValue(card.getCardContents().get(1).getValue());//setQuestion(card_list.get(i).getAnswer());
+            card.getCardContents().get(1).setValue(aux);//.setAnswer(aux);
         }
         do_switch = false;
     }

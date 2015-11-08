@@ -8,11 +8,13 @@ public class DBCardProgress {
 
     private Long id;
     private Long remoteId;
+    private int cardId;
     private double level;
     private double volatility;
     private Long lastStudyDate;
     /** Not-null value. */
     private String version;
+    private int timesStudied;
     private long userDeckId;
 
     public DBCardProgress() {
@@ -22,13 +24,15 @@ public class DBCardProgress {
         this.id = id;
     }
 
-    public DBCardProgress(Long id, Long remoteId, double level, double volatility, Long lastStudyDate, String version, long userDeckId) {
+    public DBCardProgress(Long id, Long remoteId, int cardId, double level, double volatility, Long lastStudyDate, String version, int timesStudied, long userDeckId) {
         this.id = id;
         this.remoteId = remoteId;
+        this.cardId = cardId;
         this.level = level;
         this.volatility = volatility;
         this.lastStudyDate = lastStudyDate;
         this.version = version;
+        this.timesStudied = timesStudied;
         this.userDeckId = userDeckId;
     }
 
@@ -46,6 +50,14 @@ public class DBCardProgress {
 
     public void setRemoteId(Long remoteId) {
         this.remoteId = remoteId;
+    }
+
+    public int getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(int cardId) {
+        this.cardId = cardId;
     }
 
     public double getLevel() {
@@ -80,6 +92,14 @@ public class DBCardProgress {
     /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public int getTimesStudied() {
+        return timesStudied;
+    }
+
+    public void setTimesStudied(int timesStudied) {
+        this.timesStudied = timesStudied;
     }
 
     public long getUserDeckId() {

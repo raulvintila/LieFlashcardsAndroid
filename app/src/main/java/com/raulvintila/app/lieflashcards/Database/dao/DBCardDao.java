@@ -24,14 +24,16 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
     /**
      * Properties of entity DBCard.<br/>
      * Can be used for QueryBuilder and for referencing column names.
-    */
+     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property RemoteId = new Property(1, Long.class, "remoteId", false, "REMOTE_ID");
         public final static Property LayoutType = new Property(2, String.class, "layoutType", false, "LAYOUT_TYPE");
         public final static Property Tags = new Property(3, String.class, "tags", false, "TAGS");
         public final static Property DeckId = new Property(4, long.class, "deckId", false, "DECK_ID");
-    };
+    }
+
+    ;
 
     private DaoSession daoSession;
 
@@ -40,15 +42,17 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
     public DBCardDao(DaoConfig config) {
         super(config);
     }
-    
+
     public DBCardDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
         this.daoSession = daoSession;
     }
 
-    /** Creates the underlying database table. */
+    /**
+     * Creates the underlying database table.
+     */
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
-        String constraint = ifNotExists? "IF NOT EXISTS ": "";
+        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         db.execSQL("CREATE TABLE " + constraint + "'DBCARD' (" + //
                 "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "'REMOTE_ID' INTEGER UNIQUE ," + // 1: remoteId
@@ -57,28 +61,32 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
                 "'DECK_ID' INTEGER NOT NULL );"); // 4: deckId
     }
 
-    /** Drops the underlying database table. */
+    /**
+     * Drops the underlying database table.
+     */
     public static void dropTable(SQLiteDatabase db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "'DBCARD'";
         db.execSQL(sql);
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     @Override
     protected void bindValues(SQLiteStatement stmt, DBCard entity) {
         stmt.clearBindings();
- 
+
         Long id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
- 
+
         Long remoteId = entity.getRemoteId();
         if (remoteId != null) {
             stmt.bindLong(2, remoteId);
         }
         stmt.bindString(3, entity.getLayoutType());
- 
+
         String tags = entity.getTags();
         if (tags != null) {
             stmt.bindString(4, tags);
@@ -92,26 +100,32 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
         entity.__setDaoSession(daoSession);
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     @Override
     public Long readKey(Cursor cursor, int offset) {
         return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
-    }    
+    }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     @Override
     public DBCard readEntity(Cursor cursor, int offset) {
         DBCard entity = new DBCard( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // remoteId
-            cursor.getString(offset + 2), // layoutType
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // tags
-            cursor.getLong(offset + 4) // deckId
+                cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+                cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // remoteId
+                cursor.getString(offset + 2), // layoutType
+                cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // tags
+                cursor.getLong(offset + 4) // deckId
         );
         return entity;
     }
-     
-    /** @inheritdoc */
+
+    /**
+     * @inheritdoc
+     */
     @Override
     public void readEntity(Cursor cursor, DBCard entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
@@ -119,32 +133,40 @@ public class DBCardDao extends AbstractDao<DBCard, Long> {
         entity.setLayoutType(cursor.getString(offset + 2));
         entity.setTags(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setDeckId(cursor.getLong(offset + 4));
-     }
-    
-    /** @inheritdoc */
+    }
+
+    /**
+     * @inheritdoc
+     */
     @Override
     protected Long updateKeyAfterInsert(DBCard entity, long rowId) {
         entity.setId(rowId);
         return rowId;
     }
-    
-    /** @inheritdoc */
+
+    /**
+     * @inheritdoc
+     */
     @Override
     public Long getKey(DBCard entity) {
-        if(entity != null) {
+        if (entity != null) {
             return entity.getId();
         } else {
             return null;
         }
     }
 
-    /** @inheritdoc */
-    @Override    
+    /**
+     * @inheritdoc
+     */
+    @Override
     protected boolean isEntityUpdateable() {
         return true;
     }
-    
-    /** Internal query to resolve the "cards" to-many relationship of DBDeck. */
+
+    /**
+     * Internal query to resolve the "cards" to-many relationship of DBDeck.
+     */
     public List<DBCard> _queryDBDeck_Cards(long deckId) {
         synchronized (this) {
             if (dBDeck_CardsQuery == null) {

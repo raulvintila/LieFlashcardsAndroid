@@ -5,11 +5,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import de.greenrobot.dao.internal.DaoConfig;
+<<<<<<< HEAD
 import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.QueryBuilder;
+=======
+import de.greenrobot.dao.internal.SqlUtils;
+>>>>>>> 07dcf9975e3b33547b4f74ee36e85a2f4546ecf7
 
 import com.raulvintila.app.lieflashcards.Database.dao.DBCardContent;
 
@@ -32,10 +39,15 @@ public class DBCardContentDao extends AbstractDao<DBCardContent, Long> {
         public final static Property Value = new Property(3, String.class, "value", false, "VALUE");
         public final static Property Type = new Property(4, String.class, "type", false, "TYPE");
         public final static Property Version = new Property(5, String.class, "version", false, "VERSION");
-        public final static Property CardId = new Property(6, long.class, "cardId", false, "CARD_ID");
+        public final static Property Id = new Property(6, Long.class, "id", true, "_id");
     };
 
+<<<<<<< HEAD
     private Query<DBCardContent> dBCard_CardContentsQuery;
+=======
+    private DaoSession daoSession;
+
+>>>>>>> 07dcf9975e3b33547b4f74ee36e85a2f4546ecf7
 
     public DBCardContentDao(DaoConfig config) {
         super(config);
@@ -43,6 +55,7 @@ public class DBCardContentDao extends AbstractDao<DBCardContent, Long> {
     
     public DBCardContentDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -55,7 +68,7 @@ public class DBCardContentDao extends AbstractDao<DBCardContent, Long> {
                 "'VALUE' TEXT NOT NULL ," + // 3: value
                 "'TYPE' TEXT NOT NULL ," + // 4: type
                 "'VERSION' TEXT NOT NULL ," + // 5: version
-                "'CARD_ID' INTEGER NOT NULL );"); // 6: cardId
+                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT );"); // 6: id
     }
 
     /** Drops the underlying database table. */
@@ -82,7 +95,12 @@ public class DBCardContentDao extends AbstractDao<DBCardContent, Long> {
         stmt.bindString(4, entity.getValue());
         stmt.bindString(5, entity.getType());
         stmt.bindString(6, entity.getVersion());
-        stmt.bindLong(7, entity.getCardId());
+    }
+
+    @Override
+    protected void attachEntity(DBCardContent entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
 
     /** @inheritdoc */
@@ -100,8 +118,7 @@ public class DBCardContentDao extends AbstractDao<DBCardContent, Long> {
             cursor.getString(offset + 2), // name
             cursor.getString(offset + 3), // value
             cursor.getString(offset + 4), // type
-            cursor.getString(offset + 5), // version
-            cursor.getLong(offset + 6) // cardId
+            cursor.getString(offset + 5) // version
         );
         return entity;
     }
@@ -115,7 +132,6 @@ public class DBCardContentDao extends AbstractDao<DBCardContent, Long> {
         entity.setValue(cursor.getString(offset + 3));
         entity.setType(cursor.getString(offset + 4));
         entity.setVersion(cursor.getString(offset + 5));
-        entity.setCardId(cursor.getLong(offset + 6));
      }
     
     /** @inheritdoc */
@@ -141,6 +157,7 @@ public class DBCardContentDao extends AbstractDao<DBCardContent, Long> {
         return true;
     }
     
+<<<<<<< HEAD
     /** Internal query to resolve the "cardContents" to-many relationship of DBCard. */
     public List<DBCardContent> _queryDBCard_CardContents(long cardId) {
         synchronized (this) {
@@ -155,4 +172,97 @@ public class DBCardContentDao extends AbstractDao<DBCardContent, Long> {
         return query.list();
     }
 
+=======
+    private String selectDeep;
+
+    protected String getSelectDeep() {
+        if (selectDeep == null) {
+            StringBuilder builder = new StringBuilder("SELECT ");
+            SqlUtils.appendColumns(builder, "T", getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T0", daoSession.getDBCardDao().getAllColumns());
+            builder.append(" FROM DBCARD_CONTENT T");
+            builder.append(" LEFT JOIN DBCARD T0 ON T.'_id'=T0.'_id'");
+            builder.append(' ');
+            selectDeep = builder.toString();
+        }
+        return selectDeep;
+    }
+    
+    protected DBCardContent loadCurrentDeep(Cursor cursor, boolean lock) {
+        DBCardContent entity = loadCurrent(cursor, 0, lock);
+        int offset = getAllColumns().length;
+
+        DBCard card = loadCurrentOther(daoSession.getDBCardDao(), cursor, offset);
+        entity.setCard(card);
+
+        return entity;    
+    }
+
+    public DBCardContent loadDeep(Long key) {
+        assertSinglePk();
+        if (key == null) {
+            return null;
+        }
+
+        StringBuilder builder = new StringBuilder(getSelectDeep());
+        builder.append("WHERE ");
+        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
+        String sql = builder.toString();
+        
+        String[] keyArray = new String[] { key.toString() };
+        Cursor cursor = db.rawQuery(sql, keyArray);
+        
+        try {
+            boolean available = cursor.moveToFirst();
+            if (!available) {
+                return null;
+            } else if (!cursor.isLast()) {
+                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
+            }
+            return loadCurrentDeep(cursor, true);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
+    public List<DBCardContent> loadAllDeepFromCursor(Cursor cursor) {
+        int count = cursor.getCount();
+        List<DBCardContent> list = new ArrayList<DBCardContent>(count);
+        
+        if (cursor.moveToFirst()) {
+            if (identityScope != null) {
+                identityScope.lock();
+                identityScope.reserveRoom(count);
+            }
+            try {
+                do {
+                    list.add(loadCurrentDeep(cursor, false));
+                } while (cursor.moveToNext());
+            } finally {
+                if (identityScope != null) {
+                    identityScope.unlock();
+                }
+            }
+        }
+        return list;
+    }
+    
+    protected List<DBCardContent> loadDeepAllAndCloseCursor(Cursor cursor) {
+        try {
+            return loadAllDeepFromCursor(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+
+    /** A raw-style query where you can pass any WHERE clause and arguments. */
+    public List<DBCardContent> queryDeep(String where, String... selectionArg) {
+        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
+        return loadDeepAllAndCloseCursor(cursor);
+    }
+ 
+>>>>>>> 07dcf9975e3b33547b4f74ee36e85a2f4546ecf7
 }

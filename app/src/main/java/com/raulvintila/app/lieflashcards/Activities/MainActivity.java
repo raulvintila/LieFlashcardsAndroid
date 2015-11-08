@@ -182,11 +182,16 @@ public class MainActivity extends AppCompatActivity {
                                 deck.setName(input.toString());
                                 deck.setIcon(R.drawable.dog);
                                 userDeck.setCardsPerDay(20);
+                                userDeck.setStatus("normal");
+                                //userDeck.setPosition(0);
                                 deck.setDateCreated(new Date().getTime());
+                                deck.setAuthor("Sal");
+                                deck.setVersion("0");
+                                deck.setMinAppVersion("0");
 
                                 deck = databaseManager.insertDeck(deck);
                                 databaseManager.insertUserDeck(userDeck);
-                                data.add(0, new DeckRecyclerViewItem(0, input.toString(), "20 / 25 / 122", R.drawable.dog, "0m", 20, deck.getId()));
+                                data.add(0, new DeckRecyclerViewItem(0, input.toString(), "20 / 25 / 122", R.drawable.tsunade, "0m", 20, deck.getId()));
 
 
                                 CustomModel.getInstance().getAdapter().notifyDataSetChanged();

@@ -44,6 +44,7 @@ import java.util.List;
 public class DeckActivity extends AppCompatActivity {
 
     Toolbar toolbar;
+    ViewPager viewPager;
 
     //private SectionPagerAdapter mAdapter;
 
@@ -166,10 +167,15 @@ public class DeckActivity extends AppCompatActivity {
     public void onClick(View v){
         switch (v.getId()) {
             case R.id.play:
-                if (new SpacedLearningAlgoUtils().getTodayList(databaseManager.getDeckById(deckRecyclerViewItem.getDeckId()).getCards(), (int)databaseManager.getDeckById(deckRecyclerViewItem.getDeckId()).getNumber_of_cards_per_day()).size() > 0) {
-                    final Intent intent = new Intent(this, PlayDeckActivity.class);
-                    intent.putExtra("is_preview", false);
-                    startActivity(intent);
+                int currentItem = viewPager.getCurrentItem();
+                if (new SpacedLearningAlgoUtils().getTodayList(databaseManager.getDeckById(deckRecyclerViewItem.getDeckId()).getCards(), (int)databaseManager.getDeckById(deckRecyclerViewItem.getDeckId()).getNumber_of_cards_per_day()).size() > 0 ) {
+                    switch (currentItem) {
+                        case 0:
+                            final Intent intent = new Intent(this, PlayDeckActivity.class);
+                            intent.putExtra("is_preview", false);
+                            startActivity(intent);
+                            break;
+                    }
                 } else
                     Toast.makeText(this,"No cards left to study today",Toast.LENGTH_SHORT).show();
                 return;
@@ -236,6 +242,11 @@ public class DeckActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck);
+
+        StudyPagerAdapter adapter = new StudyPagerAdapter(this, this);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(adapter);
+
 
         databaseManager = ((MyApplication)getApplicationContext()).databaseManager;
 

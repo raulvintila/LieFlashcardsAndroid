@@ -29,12 +29,31 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"/>
 
-    <Button
+<!--    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Expand"
         android:id="@+id/account_expand"
         android:layout_marginBottom="8dp"
-        android:layout_gravity="right|bottom" />
+        android:layout_gravity="right|bottom" />-->
+    <ImageView
+        android:id="@+id/account_expand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_gravity="right|bottom"
+        android:src="@drawable/ic_arrow_drop_down_white_24dp"
+        />
+
+<!--    <ImageView
+        android:id="@+id/account_expand_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_gravity="right|bottom"
+        android:src="@drawable/ic_arrow_drop_up_white_24dp"
+        />-->
 
 </FrameLayout>

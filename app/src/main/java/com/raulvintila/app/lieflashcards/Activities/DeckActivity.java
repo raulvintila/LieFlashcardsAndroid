@@ -114,6 +114,7 @@ public class DeckActivity extends AppCompatActivity {
                             databaseManager.insertOrUpdateDeck(deck);
                             deckRecyclerViewItem.setCards(Integer.parseInt(input.toString()) + " / 25 / 122");
                             CustomModel.getInstance().getAdapter().notifyDataSetChanged();
+                            generateDueTodayStats();
                         }
                     })
                     .negativeText(R.string.cancel)
@@ -217,9 +218,36 @@ public class DeckActivity extends AppCompatActivity {
         }
     }
 
+    private void generateDueTodayStats()
+    {
+        DBDeck deck = databaseManager.getDeckById(CustomModel.getInstance().getDeckId());
+
+        long deck_cards_per_day = deck.getNumber_of_cards_per_day();
+        String text;
+
+        TextView deck_total_new_cards = (TextView)findViewById(R.id.total_new_cards_stats);
+        Double new_cards = deck.getNumber_of_cards_per_day() * 0.75;
+        text = "<font color =#B0171F>" + new_cards.intValue() + "</font>";
+        deck_total_new_cards.setText(Html.fromHtml(text));
+
+
+        TextView deck_total_cards = (TextView)findViewById(R.id.total_cards_stats);
+        text = "<font color =#009900>" + (deck_cards_per_day - new_cards.intValue()) + "</font>";
+        deck_total_cards.setText(Html.fromHtml(text));
+
+        TextView deck_due_today_stats = (TextView) findViewById(R.id.due_today_stats);
+        text = "<font color=#1976D2>" + deck_cards_per_day + "</font>";
+        deck_due_today_stats.setText(Html.fromHtml(text));
+
+        TextView estimated_time = (TextView) findViewById(R.id.estimated_time_stats);
+        String estimated_time_string = (int)((new_cards * 47 + (deck_cards_per_day - new_cards) * 34) / 60) + "";
+        text = "<font color=#000000>" + estimated_time_string + "</font>";
+        estimated_time.setText(Html.fromHtml(text));
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck);
 
@@ -230,24 +258,7 @@ public class DeckActivity extends AppCompatActivity {
         deck_name = deckRecyclerViewItem.getName();
         hints_used = deckRecyclerViewItem.getHints_used();
 
-        DBDeck deck = databaseManager.getDeckById(CustomModel.getInstance().getDeckId());
-
-
-        TextView deck_total_new_cards = (TextView)findViewById(R.id.total_new_cards_stats);
-        deck_total_new_cards.setText(""+deck.getTotal_new_cards());
-
-        TextView deck_total_cards = (TextView)findViewById(R.id.total_cards_stats);
-        deck_total_cards.setText(""+deck.getNumber_of_cards());
-
-        TextView deck_due_today_stats = (TextView) findViewById(R.id.due_today_stats);
-        String deck_cards_per_day = ""+deck.getNumber_of_cards_per_day();
-        String text = "<font color=#1976D2>"+deck_cards_per_day+"</font> <font color=#008800> 2</font> <font color=#bb0000> 6</font>";
-        deck_due_today_stats.setText(Html.fromHtml(text));
-
-        /*mPager = (ViewPager) findViewById(R.id.pager);
-        mAdapter = new SectionPagerAdapter(getSupportFragmentManager(),DeckActivity.this);
-        mPager.setAdapter(mAdapter);
-        tabLayout.setupWithViewPager(mPager);*/
+        generateDueTodayStats();
 
         toolbar  = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

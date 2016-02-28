@@ -466,8 +466,17 @@ public class PlayDeckActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_play_deck, menu);
+        if(whiteboard_enabled)
+        {
+            menu.findItem(R.id.action_clear_whiteboard).setVisible(true);
+            menu.findItem(R.id.action_whiteboard).setTitle("Disable Whiteboard");
+        }
+        else
+        {
+            menu.findItem(R.id.action_clear_whiteboard).setVisible(false);
+            menu.findItem(R.id.action_whiteboard).setTitle("Enable Whiteboard");
+        }
         return true;
     }
 
@@ -491,25 +500,24 @@ public class PlayDeckActivity extends ActionBarActivity {
         }
 
         if(id == R.id.action_whiteboard) {
-            //MenuItem clear = (MenuItem) findViewById(R.id.action_clear_whiteboard);
             if (whiteboard_enabled) {
-                item.setTitle("Enable whiteboard");
-                //clear.setVisible(false);
                 whiteboard_enabled = false;
+                invalidateOptionsMenu();
                 main_linear_layout.removeView(drawing_view);
             }
             else {
-                item.setTitle("Disable whiteboard");
-                //clear.setVisible(true);
                 whiteboard_enabled = true;
+                invalidateOptionsMenu();
                 main_linear_layout.addView(drawing_view);
             }
         }
 
-        if(id == R.id.action_clear_whiteboard) {
-            drawing_view.clear();
-            // Here the color should change, maybe the icon should be faded off
-            //item.setVisible(false);
+        if(id == R.id.action_clear_whiteboard)
+        {
+            if(whiteboard_enabled)
+            {
+                drawing_view.clear();
+            }
         }
 
         //noinspection SimplifiableIfStatement

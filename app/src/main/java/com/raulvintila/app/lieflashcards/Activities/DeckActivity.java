@@ -90,20 +90,6 @@ public class DeckActivity extends AppCompatActivity {
                 return;
             case 1:
                 new MaterialDialog.Builder(this)
-                    .title("Change stack")
-                            //.content("Current stack: " + deck)
-                    .inputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
-                    .input("", "", false, new MaterialDialog.InputCallback() {
-                        @Override
-                        public void onInput(MaterialDialog dialog, CharSequence input) {
-                        }
-                    })
-                    .negativeText(R.string.cancel)
-                    .positiveText(R.string.choose)
-                    .show();
-                return;
-            case 2:
-                new MaterialDialog.Builder(this)
                     .title("Cards per day")
                             //.content("Current number of cards: " + 20)
                     .inputType(InputType.TYPE_CLASS_NUMBER)
@@ -121,7 +107,7 @@ public class DeckActivity extends AppCompatActivity {
                     .positiveText(R.string.choose)
                     .show();
                 return;
-            case 3:
+            case 2:
                 new MaterialDialog.Builder(this)
                     .title("Hints")
                     .items(R.array.hints)
@@ -142,7 +128,7 @@ public class DeckActivity extends AppCompatActivity {
                     .positiveText(R.string.choose)
                     .show();
                 return;
-            case 4:
+            case 3:
                 new MaterialDialog.Builder(this)
                     .title("Archive")
                     .content("Archive deck?")
@@ -150,7 +136,7 @@ public class DeckActivity extends AppCompatActivity {
                     .negativeText("No")
                     .show();
                 return;
-            case 5:
+            case 4:
                 new MaterialDialog.Builder(this)
                     .title("Remove Deck")
                     .content("Are you sure you want to remove '" + deck.getName() + "'?")
@@ -202,7 +188,7 @@ public class DeckActivity extends AppCompatActivity {
                 databaseManager.getDeckById(CustomModel.getInstance().getDeckId());
                 intent3.putExtra("deck_id",databaseManager.getDeckById(CustomModel.getInstance().getDeckId()).getId());
                 startActivity(intent3);*/
-                List<String> settings = Arrays.asList("Rename","Stack","Cards per day","Hints","Archive","Remove");
+                List<String> settings = Arrays.asList("Rename","Cards per day","Hints","Archive","Remove");
                 new MaterialDialog.Builder(this)
                     .title("Settings")
                     .items(R.array.deck_settings)

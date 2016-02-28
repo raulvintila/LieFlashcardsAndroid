@@ -135,6 +135,7 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
     private String multimedia_path;
     private boolean restarted;
     private int diff_index = 2;
+    private String back_from = "preview";
 
     public void showDif(View v) {
         new MaterialDialog.Builder(this)
@@ -180,6 +181,7 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
         }
 
         //intent.putExtra("front", front.getText().toString());
+        back_from = "preview";
         startActivity(intent);
     }
 
@@ -353,7 +355,7 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
         {
             back_from_multimedia = true;
 
-            if (restarted)
+            if (restarted && back_from.equals("image"))
             {
                 changeEditTextFields();
             }
@@ -367,7 +369,7 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
         {
             back_from_audio = true;
 
-            if (restarted)
+            if (restarted && back_from.equals("audio"))
             {
                 changeEditTextFieldsIntoAudio();
             }
@@ -765,6 +767,7 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
                 textView.setText("Image");*/
                 Intent intent = new Intent(this, AddImageActivity.class);
                 startActivity(intent);
+                back_from = "image";
                 return true;
             case R.id.audio_b_id:
                 /*type.setBackType("audio");
@@ -775,6 +778,7 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
                 textView.setText("Audio");*/
                 Intent i = new Intent(this, AudioRecordActivity.class);
                 startActivity(i);
+                back_from = "audio";
                 return true;
             case R.id.text_f_id:
                 type.setFrontType("text");
@@ -793,6 +797,7 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
                 textView.setText("Image");*/
                 Intent intent1 = new Intent(this, AddImageActivity.class);
                 startActivity(intent1);
+                back_from = "image";
                 return true;
             case R.id.audio_f_id:
                 /*type.setFrontType("audio");
@@ -803,6 +808,7 @@ public class AddCardActivity extends ActionBarActivity implements AdapterView.On
                 textView.setText("Audio");*/
                 Intent i1 = new Intent(this, AudioRecordActivity.class);
                 startActivity(i1);
+                back_from = "audio";
                 return true;
             default:
                 return false;

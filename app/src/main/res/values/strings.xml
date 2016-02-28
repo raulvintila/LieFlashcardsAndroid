@@ -25,7 +25,6 @@
 
     <string-array name="deck_settings">
         <item>Rename</item>
-        <item>Stack</item>
         <item>Cards per day</item>
         <item>Hints</item>
         <item>Archive</item>

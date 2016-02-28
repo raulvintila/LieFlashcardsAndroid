@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View v){
         switch (v.getId()) {
-            case R.id.action_b:
+            case R.id.create_card:
                 menuMultipleActions.collapse();
                 final Intent intent = new Intent(this,AddCardActivity.class);
                 final Handler handler = new Handler();
@@ -186,10 +186,10 @@ public class MainActivity extends AppCompatActivity {
 
                 databaseManager.insertCard(card);*/
                 return ;
-            case R.id.rl2:
+            /*case R.id.rl2:
                 if (menuMultipleActions.isExpanded())
                     menuMultipleActions.collapse();
-                return ;
+                return ;*/
             case R.id.create_deck:
                 new MaterialDialog.Builder(this)
                         .title("New Deck")

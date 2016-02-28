@@ -90,17 +90,17 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="0.28"
             android:background="#ffffffff"/>
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_weight="0.68"
             android:background="#ffe9e9e9"/>
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.1"
+            android:layout_weight="0.04"
             android:background="#ffffffff"/>
     </LinearLayout>
 

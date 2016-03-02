@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.raulvintila.app.lieflashcards.Activities.CardCollectionActivity"
     android:id="@+id/card_fragment"
+    android:background="@color/white"
     >
 
     <LinearLayout
@@ -125,7 +126,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_below="@+id/answer_question"
-        android:background="#ffebefea"
+        android:background="@color/white"
         android:layout_height="match_parent" />
 
 </RelativeLayout>

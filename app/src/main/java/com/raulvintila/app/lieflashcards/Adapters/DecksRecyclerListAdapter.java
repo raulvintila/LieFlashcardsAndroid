@@ -67,7 +67,22 @@ public class DecksRecyclerListAdapter extends RecyclerView.Adapter<DecksRecycler
     @Override
     public void onBindViewHolder(final MainViewHolder holder, int position) {
 
-        holder.mPhoto.setImageResource(mData.get(position).getPhotoId());
+        if(mData.get(position).getName().equals("Rase Caini"))
+        {
+            holder.mPhoto.setImageResource(mContext.getResources().getIdentifier("dog", "drawable", mContext.getPackageName()));
+        }
+        else if(mData.get(position).getName().equals("Medicina"))
+        {
+            holder.mPhoto.setImageResource(mContext.getResources().getIdentifier("medicina", "drawable", mContext.getPackageName()));
+        }
+        else if(mData.get(position).getName().equals("Semne circulatie"))
+        {
+            holder.mPhoto.setImageResource(mContext.getResources().getIdentifier("semneauto", "drawable", mContext.getPackageName()));
+        }
+        else
+        {
+            holder.mPhoto.setImageResource(mData.get(position).getPhotoId());
+        }
         holder.mCards.setText(mData.get(position).getCards());
 
         Paint textPaint = holder.mName.getPaint();

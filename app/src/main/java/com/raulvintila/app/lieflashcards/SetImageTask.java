@@ -4,6 +4,7 @@ package com.raulvintila.app.lieflashcards;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -22,7 +23,8 @@ public class SetImageTask extends AsyncTask<String, Void, Bitmap>
     @Override
     protected Bitmap doInBackground(String... params)
     {
-        return BitmapFactory.decodeFile(new File(params[0]).getAbsolutePath());
+        byte[] imageAsBytes = Base64.decode(params[0].getBytes(), Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
     }
 
     @Override

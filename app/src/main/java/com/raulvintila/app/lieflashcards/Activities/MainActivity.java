@@ -7,6 +7,7 @@ import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -35,6 +36,9 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -55,6 +59,8 @@ import com.raulvintila.app.lieflashcards.Communication.UserId;
 import com.raulvintila.app.lieflashcards.Fragments.TaskFragment;
 import com.raulvintila.app.lieflashcards.MyApplication;
 import com.raulvintila.app.lieflashcards.Password;
+import com.raulvintila.app.lieflashcards.PcCard;
+import com.raulvintila.app.lieflashcards.PcDeck;
 import com.raulvintila.app.lieflashcards.RecyclerItems.DeckRecyclerViewItem;
 import com.raulvintila.app.lieflashcards.R;
 import com.raulvintila.app.lieflashcards.SyncClasses.Card;
@@ -253,6 +259,8 @@ public class MainActivity extends AppCompatActivity {
         CustomModel.getInstance().setList(data);
         // re-attach the activity if the task is still available
         TaskHelper.getInstance().attach("task", this);
+
+        loadRaw();
     }
 
 
@@ -276,7 +284,10 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch (id) {
                     case R.id.action_sync:
-                        attemptSync();
+                        //attemptSync();
+
+                        loadRaw();
+
                         /*Toast.makeText(getApplicationContext(),"mer",Toast.LENGTH_SHORT).show();
                         AsyncDeleteDeck del_task = new AsyncDeleteDeck();
                         del_task.execute("55c6189198de630300aad6f1");*/
@@ -569,12 +580,103 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_sync:
-                attemptSync();
+                loadRaw();
+                //attemptSync();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void loadRaw()
+    {
+        Gson gson = new Gson();
+
+        int[] intArray = new int[3];
+        intArray[1] = R.raw.caini;
+        intArray[0] = R.raw.medicina;
+        intArray[2] = R.raw.semneauto;
+
+        databaseManager.deleteDecks();
+        data.clear();
+
+        for(int i = 0; i < intArray.length; i++)
+        {
+            try
+            {
+                Resources res = getResources();
+                InputStream in_s = res.openRawResource(intArray[i]);
+
+                byte[] b = new byte[in_s.available()];
+                in_s.read(b);
+                String fisier = new String(b);
+
+                PcDeck deck = new Gson().fromJson(fisier, PcDeck.class);
+
+                addDeck(deck);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void addDeck(PcDeck deck)
+    {
+        DBDeck dbDeck = new DBDeck();
+        dbDeck.setName(deck.getName());
+        dbDeck.setDate_created(new Date());
+        dbDeck.setNumber_of_cards_per_day(20);
+        dbDeck.setNumber_of_cards(0);
+        dbDeck.setTotal_new_cards(new Long(0));
+        dbDeck.setDate_created(new Date());
+
+        dbDeck = databaseManager.insertDeck(dbDeck);
+        data.add(0, new DeckRecyclerViewItem(0, dbDeck.getName(), "20 / 25 / 122", R.drawable.dog, "0m", new Integer[]{0}, 20, dbDeck.getId()));
+
+        if(deck.getName().equals("Rase Caini") )
+            addCardsToDeck(dbDeck, deck, "switched");
+        else
+            addCardsToDeck(dbDeck, deck, "normal");
+    }
+
+    private void addCardsToDeck(DBDeck dbDeck, PcDeck deck, String qaType)
+    {
+
+        for(PcCard card : deck.getCards())
+        {
+            DBCard dbCard = new DBCard();
+            String card_type;
+            int size = card.getBack().length();
+            if(qaType.equals("normal"))
+            {
+                if (size > 2000000)
+                {
+                    continue;
+                }
+                dbCard.setQuestion(card.getFront());
+                dbCard.setAnswer(card.getBack());
+                card_type = card.getFrontType().toLowerCase() + "_" + card.getBackType().toLowerCase();
+            }
+            else
+            {
+                dbCard.setQuestion(card.getBack());
+                dbCard.setAnswer(card.getFront());
+                card_type = card.getBackType().toLowerCase()+ "_" + card.getFrontType().toLowerCase();
+            }
+            dbCard.setDeckId(dbDeck.getId());
+
+            dbCard.setDifficulty(card_type);
+            dbCard.setDate_creted(new Date());
+            dbCard.setLast_study(new Date());
+            dbCard.setCurrent_level(0.0);
+            dbCard.setVolatility(1.0);
+            dbCard.setTimes_studied(0);
+
+            databaseManager.insertOrUpdateCard(dbCard);
+        }
+
+        CustomModel.getInstance().getAdapter().notifyDataSetChanged();
+    }
 
     @Override
     protected void onDestroy() {

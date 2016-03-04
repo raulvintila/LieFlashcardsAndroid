@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.raulvintila.app.lieflashcards.Activities.DeckActivity">
 
-    <item
+    <!--<item
         android:id="@+id/check_in_store"
         android:title="Check in Store"
         android:icon="@drawable/ic_done"
-        app:showAsAction="never"/>
+        app:showAsAction="never"/>-->
 
     <item
         android:id="@+id/add"

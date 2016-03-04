@@ -360,15 +360,18 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent1);
                         return true;
                     case R.id.navItem3_statistics:
-                        Intent intent2 = new Intent(getApplicationContext(), StatisticsActivity.class);
-                        startActivity(intent2);
+                        /*Intent intent2 = new Intent(getApplicationContext(), StatisticsActivity.class);
+                        startActivity(intent2);*/
+                        Toast.makeText(getApplicationContext(), "statistics menu", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.navItem4_store:
+                        Toast.makeText(getApplicationContext(), "Store, a place where users will find what they're looking for.", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.navItem5_settings:
-                        Intent intent3 = new Intent(getApplicationContext(), SettingsActivity.class);
+                        /*Intent intent3 = new Intent(getApplicationContext(), SettingsActivity.class);
                         //intent.putExtra("deck",mProvider.get(vh.getAdapterPosition()).name);
-                        startActivity(intent3);
+                        startActivity(intent3);*/
+                        Toast.makeText(getApplicationContext(), "general app settings", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.navItem6_about:
                         new MaterialDialog.Builder(MainActivity.this)

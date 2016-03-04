@@ -39,7 +39,12 @@
     <string name="title_activity_statistics">StatisticsActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="about_title">About</string>
-    <string name="about_content">This isn\'t about that</string>
+    <string name="about_content">Hello, I think that the education of today has a very similiar problem to the one that hit the inthernet 20 years ago. In both cases, there were vasts amounts of information, but the users could not really reach what they wanted.
+For the internet, the solution was innovating browsers. Lie, our product, wants to solve this problem by innovating the way we structure and organize information for a better education.
+Think of lie as a platform were users can find packages of organized information tailored heir need. Because we choose how the information is structured, we can offer not only a smooth search experience, but also learning algorithms
+and games.
+We realize that this is going to be a long term process, so we need as many advices and critics as possible. We would really like to hear your oppions obout our product.
+A lot of people are gonna call me a lier for saying this, but \'hey, I think that learning is easy\'.</string>
     <string name="remove">Are you sure?</string>
     <string name="yes">Yes</string>
     <string name="ok">Ok</string>

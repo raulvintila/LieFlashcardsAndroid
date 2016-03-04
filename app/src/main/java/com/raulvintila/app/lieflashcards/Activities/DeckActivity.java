@@ -109,8 +109,9 @@ public class DeckActivity extends AppCompatActivity {
                             databaseManager.insertOrUpdateDeck(deck);
                             deckRecyclerViewItem.setCards(Integer.parseInt(input.toString()) + " / 25 / 122");
                             CustomModel.getInstance().getAdapter().notifyDataSetChanged();
-                            SpacedLearningFragment fragment = (SpacedLearningFragment) pagerFragments.get(1);
-                            fragment.generateDueTodayStats();
+                            /*SpacedLearningFragment fragment = (SpacedLearningFragment) pagerFragments.get(1);
+                            fragment.generateDueTodayStats();*/
+                            generateDueTodayStats();
                         }
                     })
                     .negativeText(R.string.cancel)
@@ -176,21 +177,28 @@ public class DeckActivity extends AppCompatActivity {
     public void onClick(View v){
         switch (v.getId()) {
             case R.id.play:
-                int currentItem = viewPager.getCurrentItem();
+                //int currentItem = viewPager.getCurrentItem();
                 if (new SpacedLearningAlgoUtils().getTodayList(databaseManager.getDeckById(deckRecyclerViewItem.getDeckId()).getCards(), (int)databaseManager.getDeckById(deckRecyclerViewItem.getDeckId()).getNumber_of_cards_per_day()).size() > 0 ) {
-                    switch (currentItem) {
-                        case 1:
+                    //switch (currentItem) {
+                    //    case 1:
                             final Intent intent = new Intent(this, PlayDeckActivity.class);
                             intent.putExtra("is_preview", false);
                             startActivity(intent);
                             break;
-                    }
+                   // }
                 } else
                     Toast.makeText(this,"No cards left to study today",Toast.LENGTH_SHORT).show();
                 return;
             case  R.id.goals:
-                Intent intent = new Intent(this, GoalsActivity.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(this, GoalsActivity.class);
+                startActivity(intent);*/
+                Toast.makeText(getApplicationContext(), "goals set by user", Toast.LENGTH_SHORT).show();
+                return;
+            case R.id.achievments:
+                Toast.makeText(getApplicationContext(), "achievments of this deck", Toast.LENGTH_SHORT).show();
+                return;
+            case R.id.statistics:
+                Toast.makeText(getApplicationContext(), "statistics of this deck", Toast.LENGTH_SHORT).show();
                 return;
             case R.id.cards_icon:
                 final Intent intent2 = new Intent(this,CardCollectionActivity.class);
@@ -226,7 +234,7 @@ public class DeckActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck);
 
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
+/*        viewPager = (ViewPager) findViewById(R.id.view_pager);
         pagerFragments = createPagerFragments();
         StudyPagerAdapter adapter = new StudyPagerAdapter(this.getSupportFragmentManager(), viewPager);
         adapter.setPagerFragments(pagerFragments);
@@ -252,7 +260,7 @@ public class DeckActivity extends AppCompatActivity {
                 if (currentPosition % 2 == 1) viewPager.setCurrentItem(2, false);
                 else viewPager.setCurrentItem(1, false);
             }
-        });
+        });*/
 
         databaseManager = ((MyApplication)getApplicationContext()).databaseManager;
 
@@ -261,7 +269,7 @@ public class DeckActivity extends AppCompatActivity {
         deck_name = deckRecyclerViewItem.getName();
         hints_used = deckRecyclerViewItem.getHints_used();
 
-        //generateDueTodayStats();
+        generateDueTodayStats();
 
         toolbar  = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -279,6 +287,32 @@ public class DeckActivity extends AppCompatActivity {
 
     }
 
+    public void generateDueTodayStats()
+    {
+        DBDeck deck = databaseManager.getDeckById(CustomModel.getInstance().getDeckId());
+
+        long deck_cards_per_day = deck.getNumber_of_cards_per_day();
+        String text;
+
+        TextView deck_total_new_cards = (TextView)findViewById(R.id.total_new_cards_stats);
+        Double new_cards = deck.getNumber_of_cards_per_day() * 0.75;
+        text = "<font color =#B0171F>" + new_cards.intValue() + "</font>";
+        deck_total_new_cards.setText(Html.fromHtml(text));
+
+
+        TextView deck_total_cards = (TextView)findViewById(R.id.total_cards_stats);
+        text = "<font color =#009900>" + (deck_cards_per_day - new_cards.intValue()) + "</font>";
+        deck_total_cards.setText(Html.fromHtml(text));
+
+        TextView deck_due_today_stats = (TextView) findViewById(R.id.due_today_stats);
+        text = "<font color=#1976D2>" + deck_cards_per_day + "</font>";
+        deck_due_today_stats.setText(Html.fromHtml(text));
+
+        TextView estimated_time = (TextView) findViewById(R.id.estimated_time_stats);
+        String estimated_time_string = (int)((new_cards * 47 + (deck_cards_per_day - new_cards) * 34) / 60) + "";
+        text = "<font color=#000000>" + estimated_time_string + "</font>";
+        estimated_time.setText(Html.fromHtml(text));
+    }
 /*    public class SectionPagerAdapter extends FragmentPagerAdapter {
 
         static final int NUM_ITEMS = 3;

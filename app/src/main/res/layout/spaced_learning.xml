@@ -38,7 +38,7 @@
             android:id="@+id/due_today"
             android:text="Due today"
             android:gravity="left"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="16dp"
             android:layout_below="@+id/deck_sub_mode"
             />
         <TextView
@@ -99,7 +99,7 @@
         android:id="@+id/play_mode_description1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="16dp"
         android:layout_below="@+id/deck_stats"
         android:text="Spaced learning offers a great strategy for memorising a set of cards with long term results in mind."/>
     <TextView

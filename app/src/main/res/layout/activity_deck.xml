@@ -99,7 +99,7 @@
         android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
         android:layout_marginLeft="16dp" android:layout_marginRight="16dp"
         />
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="6"
@@ -112,11 +112,11 @@
             android:id="@+id/left_rl">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:clickable="true"
                 android:id="@+id/leftArrow"
-                android:layout_gravity="center_vertical|left"
+                android:layout_gravity="center_vertical|center"
                 android:src="@drawable/left_arrow"/>
         </FrameLayout>
         <android.support.v4.view.ViewPager
@@ -132,17 +132,127 @@
             android:id="@+id/right_rl">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:clickable="true"
                 android:id="@+id/rightArrow"
-                android:layout_gravity="center_vertical|right"
+                android:layout_gravity="center_vertical|center"
                 android:src="@drawable/right_arrow"/>
         </FrameLayout>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:id="@+id/stats_rl"
+        android:background="@color/white"
+        android:paddingTop="16dp"
+        android:paddingLeft="56dp"
+        android:paddingRight="56dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <RelativeLayout
+            android:id="@+id/deck_stats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/deck_main_mode"
+                android:text="Study"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_below="@+id/deck_main_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/deck_sub_mode"
+                android:text="Spaced learning"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/due_today"
+                android:text="Due today"
+                android:gravity="left"
+                android:layout_marginTop="16dp"
+                android:layout_below="@+id/deck_sub_mode"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/due_today_stats"
+                android:layout_below="@+id/deck_sub_mode"
+                android:gravity="right"
+                android:layout_marginTop="16dp"
+                android:text="20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_new_cards"
+                android:text="New cards"
+                android:gravity="left"
+                android:layout_below="@+id/due_today"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_new_cards_stats"
+                android:layout_below="@+id/due_today"
+                android:gravity="right"
+                android:text="15"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_cards"
+                android:text="Restudied cards"
+                android:gravity="left"
+                android:layout_below="@+id/total_new_cards"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_cards_stats"
+                android:layout_below="@+id/total_new_cards"
+                android:gravity="right"
+                android:text="5"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/estimated_time"
+                android:text="Estimated time (min)"
+                android:gravity="left"
+                android:layout_below="@+id/total_cards"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/estimated_time_stats"
+                android:layout_below="@+id/total_cards"
+                android:gravity="right"
+                android:text="17"/>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/play_mode_description1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/deck_stats"
+            android:text="Spaced learning offers a great strategy for memorising a set of cards with long term results in mind."/>
+        <TextView
+            android:id="@+id/play_mode_description2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/play_mode_description1"
+            android:text="Used daily it guarantees that it'll keep memorised what you learn."/>
+    </RelativeLayout>
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"

@@ -431,7 +431,7 @@ public class PlayDeckActivity extends ActionBarActivity {
 
         } else {
 
-
+            getSupportActionBar().setTitle("Play");
             text_to_speech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
                 @Override
                 public void onInit(int status) {

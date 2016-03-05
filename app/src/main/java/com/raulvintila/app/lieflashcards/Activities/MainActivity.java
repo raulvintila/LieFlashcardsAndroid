@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 }, 125);
                 /*Snackbar.make(findViewById(R.id.drawerLayout), "Hello. I am Snackbar!", Snackbar.LENGTH_SHORT)
                         .setAction("Undo", new View.OnClickListener() {
-                            @Override
+                            @OverrideonCr
                             public void onClick(View v) {
 
                             }
@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
                                 deck.setDate_created(new Date());
 
                                 deck = databaseManager.insertDeck(deck);
-                                data.add(0, new DeckRecyclerViewItem(0, input.toString(), "20 / 25 / 122", R.drawable.dog, "0m", new Integer[]{0}, 20, deck.getId()));
+                                data.add(0, new DeckRecyclerViewItem(0, input.toString(), "0 / 20 / 0", R.drawable.tsunade, "0s", new Integer[]{0}, 20, deck.getId()));
 
                                 CustomModel.getInstance().getAdapter().notifyDataSetChanged();
                             }
@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
         // re-attach the activity if the task is still available
         TaskHelper.getInstance().attach("task", this);
 
-        loadRaw();
+//        loadRaw();
     }
 
 
@@ -626,12 +626,14 @@ public class MainActivity extends AppCompatActivity {
         dbDeck.setName(deck.getName());
         dbDeck.setDate_created(new Date());
         dbDeck.setNumber_of_cards_per_day(20);
-        dbDeck.setNumber_of_cards(0);
+        if(deck.getName().equals("Medicina") ) dbDeck.setNumber_of_cards(12);
+        else dbDeck.setNumber_of_cards(15);
         dbDeck.setTotal_new_cards(new Long(0));
         dbDeck.setDate_created(new Date());
 
         dbDeck = databaseManager.insertDeck(dbDeck);
-        data.add(0, new DeckRecyclerViewItem(0, dbDeck.getName(), "20 / 25 / 122", R.drawable.dog, "0m", new Integer[]{0}, 20, dbDeck.getId()));
+        if(deck.getName().equals("Medicina") ) data.add(0, new DeckRecyclerViewItem(0, dbDeck.getName(), "9 / 20 / 12", R.drawable.dog, "0s", new Integer[]{0}, 20, dbDeck.getId()));
+        else data.add(0, new DeckRecyclerViewItem(0, dbDeck.getName(), "12 / 20 / 15", R.drawable.dog, "0s", new Integer[]{0}, 20, dbDeck.getId()));
 
         if(deck.getName().equals("Rase Caini") )
             addCardsToDeck(dbDeck, deck, "switched");

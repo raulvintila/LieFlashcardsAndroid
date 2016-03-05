@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -125,13 +126,60 @@ public class RecyclerListViewFragment extends Fragment {
         data = new ArrayList<>();
 
         for(int i = 0; i < decks.size(); i++) {
-            DeckRecyclerViewItem deckRecyclerViewItem = new DeckRecyclerViewItem(i,decks.get(i).getName(),"25 / 70 / 250",R.drawable.tsunade,"1y",new Integer[]{0},20,decks.get(i).getId());
+            DeckRecyclerViewItem deckRecyclerViewItem = new DeckRecyclerViewItem(i,decks.get(i).getName(),generateCardsStatsStringFromDeck(decks.get(i)),R.drawable.tsunade,generateLastStudiedStringFromDeck(decks.get(i)),new Integer[]{0},20,decks.get(i).getId());
             data.add(deckRecyclerViewItem);
         }
 
 
         // Sends the data to MainActivity
         ((MainActivity)getActivity()).setData(data);
+    }
+
+    public String generateCardsStatsStringFromDeck(DBDeck deck) {
+
+        long deck_cards_per_day = deck.getNumber_of_cards_per_day();
+        Double new_cards;
+        long total_number_of_cards = deck.getNumber_of_cards();
+
+        if (deck_cards_per_day <= total_number_of_cards) {
+            new_cards = deck_cards_per_day * 0.75;
+        } else {
+            new_cards = total_number_of_cards * 0.75;
+        }
+        return new_cards.intValue() + " / " + deck_cards_per_day + " / " + total_number_of_cards;
+
+    }
+
+    public String generateLastStudiedStringFromDeck(DBDeck deck){
+
+        Calendar thatDay = Calendar.getInstance();
+        thatDay.setTime(deck.getDate_created());
+        Calendar today = Calendar.getInstance();
+
+        return getDurationBreakdown(today.getTimeInMillis() - thatDay.getTimeInMillis());
+    }
+
+    public static String getDurationBreakdown(long millis)
+    {
+        if(millis < 0)
+        {
+            throw new IllegalArgumentException("Duration must be greater than zero!");
+        }
+
+        int seconds = (int) (millis / 1000);
+        if ( seconds < 60 ) return seconds + "s";
+        int minutes = (int) ((millis / (1000*60)) );
+        if ( minutes < 60 ) return  minutes + "m";
+        int hours   = (int) ((millis / (1000*60*60)));
+        if ( hours < 24 ) return  hours + "h";
+        int days = (int) (((millis / (1000*60*60 *24))));
+        if ( days < 7 ) return  days + "d";
+        int weeks = (int) (((millis / (1000*60*60 *24 * 7))));
+        if ( weeks < 4 ) return  weeks + "w";
+        int months = (int) (((millis / (1000*60*60 *24 * 7 * 4))));
+        if (months < 12 ) return  months + "mn";
+        int years = (int) (((millis / (1000*60*60 *24 * 7 * 12))));
+        return  years + "y";
     }
 
     /*@Override

@@ -442,6 +442,8 @@ public class PlayDeckActivity extends ActionBarActivity {
             });
 
             DBDeck deck = databaseManager.getDeckById(CustomModel.getInstance().getDeckId());
+            deck.setDate_created(new Date());
+            databaseManager.insertOrUpdateDeck(deck);
             card_list = new SpacedLearningAlgoUtils().getTodayList(deck.getCards(), 25);
 
 

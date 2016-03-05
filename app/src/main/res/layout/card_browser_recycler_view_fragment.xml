@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.raulvintila.app.lieflashcards.Activities.CardCollectionActivity"
     android:id="@+id/card_fragment"
+    android:paddingBottom="16dp"
     android:background="@color/white"
     >
 
@@ -11,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@color/white"
         android:id="@+id/appbar_layout">
 
         <android.support.design.widget.AppBarLayout
